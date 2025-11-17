@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Palmis – Caribbean Restaurant</title>
+
+  <!-- Icons / styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+  <link rel="stylesheet" href="assets/styles.css">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/palmis-favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/palmis-favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/palmis-apple-180.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Social -->
+  <meta property="og:title" content="Palmis — Caribbean Restaurant">
+  <meta property="og:description" content="360° virtual tour, real-time table booking, and authentic Caribbean flavors.">
+  <meta property="og:image" content="assets/logo/palmis-og-1200x630.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://your-domain.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Palmis — Caribbean Restaurant">
+  <meta name="twitter:description" content="Experience Palmis: taste, tour, and table in one place.">
+  <meta name="twitter:image" content="assets/logo/palmis-og-1200x630.png">
+</head>
+<body>
+
+ <header class="header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="Palmis — Home">
+      <img src="assets/logo/palmis-logo-cropped.jpg" alt="Palmis" class="logo">
+    </a>
+
+
+
+      <nav class="nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="inside.html">Inside</a>
+        <a href="contact.html" class="btn">Reserve</a>
+
+        <!-- ONE flag + dropdown -->
+        <div class="lang-selector">
+          <span id="lang-flag" class="fi fi-gb" aria-hidden="true"></span>
+          <select id="lang-select" aria-label="Language">
+            <option data-lang="en">EN</option>
+            <option data-lang="pl">PL</option>
+            <option data-lang="fr">FR</option>
+            <option data-lang="es">ES</option>
+          </select>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero hero-bg">
+    <div class="overlay">
+      <h1>Welcome to <span class="brand-text">Palmis</span> 🌴</h1>
+      <p>Warm minimalist Caribbean kitchen & bar.</p>
+      <p><a href="inside.html" class="btn">Step inside</a></p>
+    </div>
+  </section>
+
+  <section class="gallery container">
+    <h2>Our Vibe</h2>
+    <div class="grid">
+      <img src="assets/photo1.jpg" alt="Caribbean dish">
+      <img src="assets/photo2.jpg" alt="Tropical drink">
+      <img src="assets/photo3.jpg" alt="Warm interior">
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 Palmis | Caribbean Restaurant Concept</p>
+  </footer>
+
+  <!-- Language switcher (unchanged) -->
+  <script>
+  (function () {
+    const sel  = document.getElementById('lang-select');
+    const flag = document.getElementById('lang-flag');
+    const flagMap = { en: 'gb', fr: 'fr', pl: 'pl', es: 'es' };
+    const langs   = Object.keys(flagMap);
+
+    function getCurrentLang() {
+      const parts = location.pathname.split('/').filter(Boolean);
+      return langs.includes(parts[0]) ? parts[0] : 'en';
+    }
+    function getCurrentPage() {
+      const last = location.pathname.split('/').pop() || '';
+      return last === '' ? 'index.html' : last;
+    }
+    function buildUrl(targetLang) {
+      const cur = getCurrentLang();
+      const page = getCurrentPage();
+      if (cur === 'en') return (targetLang === 'en') ? page : (targetLang + '/' + page);
+      if (targetLang === 'en') return '../' + page;
+      if (targetLang === cur)  return page;
+      return '../' + targetLang + '/' + page;
+    }
+    function syncUI() {
+      const cur = getCurrentLang();
+      flag.className = 'fi fi-' + flagMap[cur];
+      Array.from(sel.options).forEach((opt, i) => {
+        sel.selectedIndex = (opt.getAttribute('data-lang') === cur) ? i : sel.selectedIndex;
+      });
+    }
+    syncUI();
+    sel.addEventListener('change', function () {
+      const targetLang = sel.options[sel.selectedIndex].getAttribute('data-lang');
+      flag.className = 'fi fi-' + flagMap[targetLang];
+      location.href = buildUrl(targetLang);
+    });
+  })();
+  </script>
+</body>
+</html>

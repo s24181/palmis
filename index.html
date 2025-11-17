@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Palmis – Caribbean Restaurant</title>
+
+  <!-- Icons / styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+  <link rel="stylesheet" href="assets/styles.css">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/palmis-favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/palmis-favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/palmis-apple-180.png">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Social -->
+  <meta property="og:title" content="Palmis — Caribbean Restaurant">
+  <meta property="og:description" content="360° virtual tour, real-time table booking, and authentic Caribbean flavors.">
+  <meta property="og:image" content="assets/logo/palmis-og-1200x630.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://your-domain.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Palmis — Caribbean Restaurant">
+  <meta name="twitter:description" content="Experience Palmis: taste, tour, and table in one place.">
+  <meta name="twitter:image" content="assets/logo/palmis-og-1200x630.png">
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="Palmis — Home">
+      <img src="assets/logo/palmis-logo-cropped.jpg" alt="Palmis" class="logo">
+    </a>
+
+    <nav class="nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="inside.html">Inside</a>
+      <a href="reserve.html" class="btn">Reserve</a>
+
+      <!-- Language (custom dropdown with flags) -->
+      <div class="lang-selector" id="lang">
+        <button id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span id="lang-flag" class="fi fi-gb" aria-hidden="true"></span>
+          <span id="lang-code">EN</span>
+          <span aria-hidden="true">▾</span>
+        </button>
+
+        <ul id="lang-menu" role="listbox" tabindex="-1" hidden>
+          <li role="option" data-lang="en" tabindex="0"><span class="fi fi-gb"></span> EN</li>
+          <li role="option" data-lang="fr" tabindex="0"><span class="fi fi-fr"></span> FR</li>
+          <li role="option" data-lang="pl" tabindex="0"><span class="fi fi-pl"></span> PL</li>
+          <li role="option" data-lang="es" tabindex="0"><span class="fi fi-es"></span> ES</li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="hero hero-bg">
+  <div class="overlay">
+    <h1>Welcome to <span class="brand-text">Palmis</span> 🌴</h1>
+    <p>Warm minimalist Caribbean kitchen & bar.</p>
+    <p><a href="inside.html" class="btn">Step inside</a></p>
+  </div>
+</section>
+
+<section class="about-blend" id="about">
+  <div class="about-bg">
+    <img src="assets/lalo.jpg" alt="Palmis restaurant interior with warm Caribbean ambiance and golden light">
+  </div>
+
+  <div class="gold-frame" aria-hidden="true"></div>
+
+  <div class="container">
+    <article class="about-card about-vertical">
+      <h2>THE SPIRIT OF THE CARIBBEAN</h2>
+      <h3>Palmis — Modern Caribbean Kitchen</h3>
+      <hr class="topline" aria-hidden="true">
+      <p>At <strong>Palmis</strong>, we celebrate the heart of the Caribbean — where food is warmth,
+        color is life, and every meal feels like home. Born from a dream to share the islands’ kindness
+        and energy, we blend traditional recipes with modern craft.</p>
+      <p class="last">Sunlit flavors, rattan textures, and golden light carry the spirit of togetherness.
+        <em>More than a restaurant, Palmis is a moment</em> — a rhythm you can taste and a welcome you can feel.</p>
+    </article>
+  </div>
+</section>
+
+<section class="gallery container" id="vibe">
+  <h2>Our Vibe</h2>
+  <div class="grid">
+    <article class="item">
+      <figure class="thumb">
+        <img src="assets/griot.jpeg" alt="Haitian griot with fried plantains and pikliz on a white plate">
+      </figure>
+      <figcaption class="caption">
+        Caribbean Food — crispy griot, sweet plantains, and bright pikliz.
+      </figcaption>
+    </article>
+
+    <article class="item">
+      <figure class="thumb">
+        <img src="assets/kremas.jpg" alt="Creamy tropical cocktail served in a chilled coupe glass on a wooden bar counter">
+      </figure>
+      <figcaption class="caption">Tropical Drink — creamy Caribbean Kremas with coconut and spice.</figcaption>
+    </article>
+
+    <article class="item">
+      <figure class="thumb">
+        <img src="assets/DOUS MAKOS.jpg" alt="Cubes of Dous Makos, traditional Haitian layered fudge with pink, beige, and chocolate colors topped with gold flakes">
+      </figure>
+      <figcaption class="caption">Island Desserts — Dous Makos, a sweet Caribbean delight of color and culture.</figcaption>
+    </article>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-info">
+
+    <!-- LEFT COLUMN – Hours + Address + Map -->
+    <div class="footer-col">
+      <h3>Opening hours</h3>
+      <p>
+        Monday – Thursday: 14:00 – 22:00<br>
+        Friday – Saturday: 14:00 – 23:00<br>
+        Sunday: 14:00 – 22:00
+      </p>
+
+      <h3>Address</h3>
+      <p>123 Beachfront Avenue<br>
+         Warsaw, Poland</p>
+
+      <div class="footer-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2442.092!2d21.0122!3d52.2297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecc6693baf!2sWarsaw!5e0!3m2!1sen!2spl!4v12345"
+          width="280" height="180" style="border:0;" allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
+    </div>
+
+    <!-- CENTER COLUMN – Logo -->
+    <div class="footer-col footer-logo-wrap">
+      <div class="footer-logo-frame">
+        <img src="assets/logo/palmis-logo-cropped.jpg" alt="Palmis logo">
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN – Contact -->
+    <div class="footer-col footer-contact">
+      <a href="reserve.html" class="footer-btn">Reserve a Table</a>
+
+      <h3>Contact</h3>
+      <p>
+        +48 123 45 67 35<br>
+        <a href="mailto:info@palmis.com">info@palmis.com</a>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Copyright line (full width, centered) -->
+  <p class="footer-copy">© 2025 Palmis | Caribbean Restaurant Concept</p>
+</footer>
+
+<!-- Language menu JS -->
+<script>
+(function(){
+  const flagMap = { en:'gb', fr:'fr', pl:'pl', es:'es' };
+  const langs = Object.keys(flagMap);
+
+  const btn   = document.getElementById('lang-btn');
+  const menu  = document.getElementById('lang-menu');
+  const flag  = document.getElementById('lang-flag');
+  const code  = document.getElementById('lang-code');
+  const wrap  = document.getElementById('lang');
+
+  const getLang = () => {
+    const parts = location.pathname.split('/').filter(Boolean);
+    return langs.includes(parts[0]) ? parts[0] : 'en';
+  };
+  const getPage = () => (location.pathname.split('/').pop() || 'index.html');
+  const buildUrl = (targetLang) => {
+    const cur = getLang(), page = getPage();
+    if (cur === 'en') return targetLang === 'en' ? page : `${targetLang}/${page}`;
+    if (targetLang === 'en') return `../${page}`;
+    if (targetLang === cur)  return page;
+    return `../${targetLang}/${page}`;
+  };
+
+  function syncUI(){
+    const cur = getLang();
+    flag.className = `fi fi-${flagMap[cur]}`;
+    code.textContent = cur.toUpperCase();
+    [...menu.children].forEach(li=>{
+      li.setAttribute('aria-selected', li.dataset.lang === cur ? 'true' : 'false');
+    });
+  }
+
+  function openMenu(){
+    menu.hidden = false;
+    btn.setAttribute('aria-expanded','true');
+    const cur = getLang();
+    const li = [...menu.children].find(x=>x.dataset.lang===cur) || menu.firstElementChild;
+    li && li.focus && li.focus();
+  }
+  function closeMenu(){
+    menu.hidden = true;
+    btn.setAttribute('aria-expanded','false');
+  }
+
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    menu.hidden ? openMenu() : closeMenu();
+  });
+
+  menu.addEventListener('click', (e)=>{
+    const li = e.target.closest('li[data-lang]');
+    if(!li) return;
+    const lang = li.dataset.lang;
+    location.href = buildUrl(lang);
+  });
+
+  document.addEventListener('keydown', (e)=>{
+    if(menu.hidden) return;
+    const items = [...menu.querySelectorAll('li[data-lang]')];
+    const current = document.activeElement.closest('li[data-lang]');
+    let idx = items.indexOf(current);
+    if(e.key === 'ArrowDown'){ e.preventDefault(); items[Math.min(idx+1, items.length-1)].focus(); }
+    if(e.key === 'ArrowUp'){   e.preventDefault(); items[Math.max(idx-1, 0)].focus(); }
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); current && current.click(); }
+    if(e.key === 'Escape'){ closeMenu(); btn.focus(); }
+  });
+
+  document.addEventListener('click', (e)=>{
+    if(!wrap.contains(e.target)) closeMenu();
+  });
+
+  syncUI();
+})();
+</script>
+
+</body>
+</html>

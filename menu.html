@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Palmis – Menu</title>
+
+  <!-- Icons / styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+  <link rel="stylesheet" href="assets/styles.css">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/palmis-favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/palmis-favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/palmis-apple-180.png">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Social -->
+  <meta property="og:title" content="Palmis — Menu">
+  <meta property="og:description" content="Discover Palmis: Haitian-inspired starters, mains, desserts and cocktails.">
+  <meta property="og:image" content="assets/logo/palmis-og-1200x630.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://your-domain.com/menu.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Palmis — Menu">
+  <meta name="twitter:description" content="Taste the spirit of the Caribbean at Palmis.">
+  <meta name="twitter:image" content="assets/logo/palmis-og-1200x630.png">
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="Palmis — Home">
+      <img src="assets/logo/palmis-logo-cropped.jpg" alt="Palmis" class="logo">
+    </a>
+
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="menu.html" class="active">Menu</a>
+      <a href="inside.html">Inside</a>
+      <a href="reserve.html" class="btn">Reserve</a>
+
+      <!-- Language (custom dropdown with flags) -->
+      <div class="lang-selector" id="lang">
+        <button id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span id="lang-flag" class="fi fi-gb" aria-hidden="true"></span>
+          <span id="lang-code">EN</span>
+          <span aria-hidden="true">▾</span>
+        </button>
+
+        <ul id="lang-menu" role="listbox" tabindex="-1" hidden>
+          <li role="option" data-lang="en" tabindex="0"><span class="fi fi-gb"></span> EN</li>
+          <li role="option" data-lang="fr" tabindex="0"><span class="fi fi-fr"></span> FR</li>
+          <li role="option" data-lang="pl" tabindex="0"><span class="fi fi-pl"></span> PL</li>
+          <li role="option" data-lang="es" tabindex="0"><span class="fi fi-es"></span> ES</li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="menu-page">
+  <!-- Hero / intro -->
+  <section class="menu-hero">
+    <div class="container">
+      <h1>Our Menu</h1>
+      <p class="menu-subtitle">
+        Haitian-inspired flavors, Caribbean warmth, and a modern kitchen spirit.  
+        All plates are prepared fresh, with love and a touch of sunshine. 🌴
+      </p>
+      <p class="menu-note">
+        <strong>Allergies or dietary needs?</strong> Please let us know — we’re happy to adapt where possible.
+      </p>
+    </div>
+  </section>
+
+  <!-- Category tabs -->
+  <nav class="menu-tabs" aria-label="Menu categories">
+    <div class="container">
+      <button class="menu-tab is-active" type="button" data-target="starters">Starters</button>
+      <button class="menu-tab" type="button" data-target="mains">Mains</button>
+      <button class="menu-tab" type="button" data-target="desserts">Desserts</button>
+      <button class="menu-tab" type="button" data-target="drinks">Drinks</button>
+    </div>
+  </nav>
+
+  <!-- Starters -->
+  <section id="starters" class="menu-section is-active" aria-label="Starters">
+    <div class="container">
+      <h2>Starters</h2>
+      <div class="menu-grid">
+        <!-- Akra & Pikliz -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/akra-pikliz.jpg" alt="Crispy Haitian malanga fritters with colorful pikliz and lime wedges">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Akra & Pikliz</h3>
+             <span class="menu-price">7.50 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Crispy malanga fritters, served with fiery Haitian pikliz and fresh lime.  
+              Crunchy, tangy, and a little bit addictive.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Signature</span>
+              <span class="tag tag-spicy">Spicy</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Fried Plantain Bites -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/fried-plantain.jpg" alt="Golden fried plantain slices with dip">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Fried Plantain Bites</h3>
+              <span class="menu-price">6.50 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Double-fried green plantain (bannann peze) with a garlic–lime dipping sauce.
+              Perfect for sharing… or not.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">V</span>
+              <span class="tag">Gluten-free</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Haitian Patties -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/pate-kode.jpg" alt="Flaky Haitian patties with spiced filling">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Haitian Patties</h3>
+              <span class="menu-price">7.00 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Flaky hand pies filled with spiced chicken, beef or seasonal vegetables.
+              Ask your server for today’s filling.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Baked</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Cod Fritters -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/cod-fritters.jpg" alt="Light Haitian cod fritters with lemon and herb sauce">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Cod Fritters</h3>
+              <span class="menu-price">7.80 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Light, fluffy cod fritters (marinad pwason) with citrus and herb dip.
+              A coastal classic from the islands.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Seafood</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mains -->
+  <section id="mains" class="menu-section" aria-label="Mains">
+    <div class="container">
+      <h2>Mains</h2>
+      <div class="menu-grid">
+        <!-- Griyo -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/griyo-plantain.jpg" alt="Crispy Haitian griyo pork with rice, plantain and pikliz">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Griyo & Plantain</h3>
+              <span class="menu-price">16.50 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Slow-marinated, twice-cooked pork with bannann peze, rice & peas,
+              and a bright spoonful of pikliz.  
+              The true taste of Haiti.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Chef’s Special</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Creole Chicken -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/creole-chicken.jpg" alt="Chicken in rich Creole tomato sauce with rice and peas">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Creole Chicken Stew</h3>
+              <span class="menu-price">15.90 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Tender chicken braised in a tomato, pepper and herb sauce,
+              served with rice & peas and seasonal greens.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Comfort</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Diri Djon Djon -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/diri-djon-djon.jpg" alt="Black mushroom rice with shrimp and herbs">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Diri Djon Djon & Shrimp</h3>
+              <span class="menu-price">17.50 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Legendary Haitian black mushroom rice, topped with sautéed shrimp
+              and fresh herbs. Deep, earthy flavor with a sea breeze.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Seafood</span>
+              <span class="tag">Signature</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Tassot Kabrit -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/tassot-kabrit.jpg" alt="Crispy Haitian fried goat with rice, plantain and pikliz">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Tassot Kabrit</h3>
+              <span class="menu-price">18.00 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Marinated goat fried until crispy, served with rice & peas,
+              bannann peze and pikliz. Bold, rich, and full of character.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Bold</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Veggie Legim -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/legim-veg.jpg" alt="Colorful Haitian vegetable legim stew with white rice">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Veggie Legim Plate</h3>
+              <span class="menu-price">14.50 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Slow-cooked vegetable stew with aubergine, carrot, cabbage and
+              seasonal veg, served with white rice.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Vegan</span>
+              <span class="tag">Gluten-free</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Whole Fried Fish -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/whole-fried-fish.jpg" alt="Whole Caribbean fried fish with plantain, salad and lime">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Whole Fried Fish</h3>
+              <span class="menu-price">19.50 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Whole fish seasoned with herbs and spices, fried until crispy,
+              served with bannann peze, salad and lime.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Seafood</span>
+              <span class="tag">Sharing</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Desserts -->
+  <section id="desserts" class="menu-section" aria-label="Desserts">
+    <div class="container">
+      <h2>Desserts</h2>
+      <div class="menu-grid">
+        <!-- Pen Patat -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/pen-patat.jpg" alt="Slice of Haitian sweet potato pudding on a plate">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Pen Patat</h3>
+              <span class="menu-price">20.00 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Moist sweet potato pudding baked with warm spices and coconut.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Classic</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Coconut Blancmange -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/coconut-blancmange.jpg" alt="Coconut blancmange dessert with toasted coconut on top">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Coconut Blancmange</h3>
+              <span class="menu-price">15.50 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Silky coconut cream dessert with a light tropical syrup
+              and toasted coconut flakes.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Gluten-free</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Tablet -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/tablet-pistach.jpg" alt="Pieces of Haitian peanut brittle on a small plate">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Tablet Pistach</h3>
+              <span class="menu-price">6.50 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Haitian-style peanut brittle with caramelized sugar
+              and a hint of sea salt.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Crunchy</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Drinks -->
+  <section id="drinks" class="menu-section" aria-label="Drinks">
+    <div class="container">
+      <h2>Drinks</h2>
+      <div class="menu-grid">
+        <!-- Rum Punch -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/rum-punch.jpg" alt="Caribbean rum punch with citrus and ice">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Palmis Rum Punch</h3>
+              <span class="menu-price">30 PLN</span>
+            </div>
+            <p class="menu-desc">
+              House rum punch with passion fruit, lime and island spices.
+              Sweet, sharp and very sippable.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Alcohol</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Hibiscus Cooler -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/hibiscus-cooler.jpg" alt="Red hibiscus drink with ice and lime">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Hibiscus Cooler</h3>
+              <span class="menu-price">24 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Deep red hibiscus tea (sorrel) poured over ice with lime.
+              Naturally caffeine-free.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Non-alcoholic</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Coconut Lime Mocktail -->
+        <article class="menu-card">
+          <figure class="menu-photo">
+            <img src="assets/menu/coconut-lime-mocktail.jpg" alt="Coconut and lime mocktail with mint">
+          </figure>
+          <div class="menu-body">
+            <div class="menu-header">
+              <h3>Coconut & Lime Mocktail</h3>
+              <span class="menu-price">29 PLN</span>
+            </div>
+            <p class="menu-desc">
+              Refreshing blend of coconut water, lime and mint.
+              Light, bright and beachy.
+            </p>
+            <div class="menu-tags">
+              <span class="tag">Non-alcoholic</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© 2025 Palmis | Caribbean Restaurant Concept</p>
+</footer>
+
+<!-- Language menu JS (same as index) -->
+<script>
+(function(){
+  const flagMap = { en:'gb', fr:'fr', pl:'pl', es:'es' };
+  const langs = Object.keys(flagMap);
+
+  const btn   = document.getElementById('lang-btn');
+  const menu  = document.getElementById('lang-menu');
+  const flag  = document.getElementById('lang-flag');
+  const code  = document.getElementById('lang-code');
+  const wrap  = document.getElementById('lang');
+
+  const getLang = () => {
+    const parts = location.pathname.split('/').filter(Boolean);
+    return langs.includes(parts[0]) ? parts[0] : 'en';
+  };
+  const getPage = () => (location.pathname.split('/').pop() || 'index.html');
+  const buildUrl = (targetLang) => {
+    const cur = getLang(), page = getPage();
+    if (cur === 'en') return targetLang === 'en' ? page : `${targetLang}/${page}`;
+    if (targetLang === 'en') return `../${page}`;
+    if (targetLang === cur)  return page;
+    return `../${targetLang}/${page}`;
+  };
+
+  function syncUI(){
+    const cur = getLang();
+    flag.className = `fi fi-${flagMap[cur]}`;
+    code.textContent = cur.toUpperCase();
+    [...menu.children].forEach(li=>{
+      li.setAttribute('aria-selected', li.dataset.lang === cur ? 'true' : 'false');
+    });
+  }
+
+  function openMenu(){
+    menu.hidden = false;
+    btn.setAttribute('aria-expanded','true');
+    const cur = getLang();
+    const li = [...menu.children].find(x=>x.dataset.lang===cur) || menu.firstElementChild;
+    li && li.focus && li.focus();
+  }
+  function closeMenu(){
+    menu.hidden = true;
+    btn.setAttribute('aria-expanded','false');
+  }
+
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    menu.hidden ? openMenu() : closeMenu();
+  });
+
+  menu.addEventListener('click', (e)=>{
+    const li = e.target.closest('li[data-lang]');
+    if(!li) return;
+    const lang = li.dataset.lang;
+    location.href = buildUrl(lang);
+  });
+
+  document.addEventListener('keydown', (e)=>{
+    if(menu.hidden) return;
+    const items = [...menu.querySelectorAll('li[data-lang]')];
+    const current = document.activeElement.closest('li[data-lang]');
+    let idx = items.indexOf(current);
+    if(e.key === 'ArrowDown'){ e.preventDefault(); items[Math.min(idx+1, items.length-1)].focus(); }
+    if(e.key === 'ArrowUp'){   e.preventDefault(); items[Math.max(idx-1, 0)].focus(); }
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); current && current.click(); }
+    if(e.key === 'Escape'){ closeMenu(); btn.focus(); }
+  });
+
+  document.addEventListener('click', (e)=>{
+    if(!wrap.contains(e.target)) closeMenu();
+  });
+
+  syncUI();
+})();
+</script>
+
+<!-- Simple JS for tabs -->
+<script>
+(function(){
+  const tabs = document.querySelectorAll('.menu-tab');
+  const sections = document.querySelectorAll('.menu-section');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetId = tab.dataset.target;
+
+      tabs.forEach(t => t.classList.remove('is-active'));
+      sections.forEach(sec => sec.classList.remove('is-active'));
+
+      tab.classList.add('is-active');
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) targetSection.classList.add('is-active');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

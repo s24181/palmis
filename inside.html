@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Palmis – Inside</title>
+
+  <!-- Icons / styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+  <link rel="stylesheet" href="assets/styles.css">
+
+  <!-- A-Frame for 360° -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/palmis-favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/palmis-favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/palmis-apple-180.png">
+  <meta name="theme-color" content="#000000">
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    /* Whole page layout */
+    body.inside-page {
+      display: flex;
+      flex-direction: column;
+      background: #000; /* behind the 360 image */
+    }
+
+    main.inside-main {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+    }
+
+    /* Make A-Frame fill all available space */
+    .inside-scene {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body class="inside-page">
+
+  <!-- HEADER (same as other pages, just Inside active) -->
+  <header class="header">
+    <div class="container">
+      <a class="brand" href="index.html" aria-label="Palmis — Home">
+        <img src="assets/logo/palmis-logo-cropped.jpg" alt="Palmis" class="logo">
+      </a>
+
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="inside.html" class="btn active">Inside</a>
+        <a href="reserve.html">Reserve</a>
+
+        <div class="lang-selector" id="lang">
+          <button id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+            <span id="lang-flag" class="fi fi-gb" aria-hidden="true"></span>
+            <span id="lang-code">EN</span>
+            <span aria-hidden="true">▾</span>
+          </button>
+
+          <ul id="lang-menu" role="listbox" tabindex="-1" hidden>
+            <li role="option" data-lang="en" tabindex="0"><span class="fi fi-gb"></span> EN</li>
+            <li role="option" data-lang="fr" tabindex="0"><span class="fi fi-fr"></span> FR</li>
+            <li role="option" data-lang="pl" tabindex="0"><span class="fi fi-pl"></span> PL</li>
+            <li role="option" data-lang="es" tabindex="0"><span class="fi fi-es"></span> ES</li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 360° VIEWER: full area, no card -->
+  <main class="inside-main">
+    <a-scene embedded class="inside-scene">
+      <!-- your 360 panorama -->
+      <a-sky src="assets/palmis_inside_360.jpg" rotation="0 -90 0"></a-sky>
+
+      <!-- camera so user can drag to look around -->
+      <a-entity
+        camera
+        look-controls="pointerLockEnabled: true"
+        position="0 1.6 0">
+      </a-entity>
+    </a-scene>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 Palmis | Caribbean Restaurant Concept</p>
+  </footer>
+
+  <!-- Language selector logic (short, still works) -->
+  <script>
+  (function(){
+    const flagMap = { en:'gb', fr:'fr', pl:'pl', es:'es' };
+    const btn   = document.getElementById('lang-btn');
+    const menu  = document.getElementById('lang-menu');
+    const flag  = document.getElementById('lang-flag');
+    const code  = document.getElementById('lang-code');
+
+    const getLang = () => {
+      const parts = location.pathname.split('/').filter(Boolean);
+      return ['en','fr','pl','es'].includes(parts[0]) ? parts[0] : 'en';
+    };
+    const getPage = () => (location.pathname.split('/').pop() || 'inside.html');
+    const buildUrl = (targetLang) => {
+      const cur = getLang(), page = getPage();
+      if (cur === 'en') return targetLang === 'en' ? page : `${targetLang}/${page}`;
+      if (targetLang === 'en') return `../${page}`;
+      if (targetLang === cur)  return page;
+      return `../${targetLang}/${page}`;
+    };
+
+    function syncUI(){
+      const cur = getLang();
+      flag.className = `fi fi-${flagMap[cur]}`;
+      code.textContent = cur.toUpperCase();
+    }
+
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      menu.hidden = !menu.hidden;
+    });
+
+    menu.addEventListener('click', (e)=>{
+      const li = e.target.closest('li[data-lang]');
+      if(!li) return;
+      const lang = li.dataset.lang;
+      location.href = buildUrl(lang);
+    });
+
+    document.addEventListener('click', (e)=>{
+      if(!menu.hidden && !btn.contains(e.target) && !menu.contains(e.target)){
+        menu.hidden = true;
+      }
+    });
+
+    syncUI();
+  })();
+  </script>
+
+</body>
+</html>

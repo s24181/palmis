@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Palmis – Restaurant caribéen</title>
+
+  <!-- Flags CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+  <!-- NOTE: styles are one level up -->
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <img src="../assets/logo.svg" alt="Palmis" height="44">
+    <nav class="nav">
+      <a href="index.html" class="active">Accueil</a>
+      <a href="menu.html">Menu</a>
+      <a href="inside.html">Intérieur</a>
+      <a href="contact.html" class="btn">Réserver</a>
+
+      <!-- ONE flag + dropdown -->
+      <div class="lang-selector">
+        <span id="lang-flag" class="fi fi-fr" aria-hidden="true"></span>
+        <select id="lang-select" aria-label="Langue">
+          <option value="../index.html" data-flag="gb">EN</option>
+          <option value="../pl/index.html" data-flag="pl">PL</option>
+          <option value="index.html" data-flag="fr" selected>FR</option>
+          <option value="../es/index.html" data-flag="es">ES</option>
+        </select>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="hero hero-bg">
+  <div class="overlay">
+    <h1>Bienvenue chez <span class="brand">Palmis</span> 🌴</h1>
+    <p>Cuisine caribéenne minimaliste, chaleureuse et élégante.</p>
+    <p><a href="inside.html" class="btn">Entrer</a></p>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2025 Palmis – Restaurant caribéen</p>
+</footer>
+
+<!-- Sync flag + navigate -->
+<script>
+(function(){
+  const sel = document.getElementById('lang-select');
+  const flag = document.getElementById('lang-flag');
+  function syncFlag(){
+    const code = sel.options[sel.selectedIndex].getAttribute('data-flag');
+    flag.className = 'fi fi-' + code;
+  }
+  syncFlag();
+  sel.addEventListener('change', function(){ syncFlag(); location.href = this.value; });
+})();
+</script>
+</body>
+</html>

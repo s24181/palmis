@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Palmis – Reserve a Table</title>
+
+  <!-- Icons / styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+  <link rel="stylesheet" href="assets/styles.css">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/palmis-favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/logo/palmis-favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/palmis-apple-180.png">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Social -->
+  <meta property="og:title" content="Palmis — Reserve a Table">
+  <meta property="og:description" content="Book your table at Palmis in just a few steps.">
+  <meta property="og:image" content="assets/logo/palmis-og-1200x630.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://your-domain.com/reserve.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Palmis — Reserve a Table">
+  <meta name="twitter:description" content="Choose your date, table and confirm your reservation.">
+  <meta name="twitter:image" content="assets/logo/palmis-og-1200x630.png">
+
+  <style>
+    :root{
+      --reserve-bg:#f7eee7;
+      --reserve-accent:#b15543;
+      --reserve-accent-soft:#e2b8aa;
+      --reserve-success:#2ca75b;
+    }
+
+    html, body{
+      height:100%;
+    }
+
+    body.reserve-page{
+      display:flex;
+      flex-direction:column;
+    }
+
+    main.reserve-main{
+      flex:1;                 /* pushes footer down */
+      padding:40px 16px 60px;
+    }
+
+    .reserve-container{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap:40px;
+      align-items:flex-start;
+    }
+
+    .reserve-panel,
+    .preview-panel{
+      background:var(--reserve-bg);
+      border-radius:28px;
+      padding:24px 24px 28px;
+      box-shadow:0 18px 40px rgba(0,0,0,.45);
+    }
+
+    .reserve-title{
+      font-size:26px;
+      margin-bottom:6px;
+    }
+
+    .reserve-sub{
+      font-size:14px;
+      opacity:.75;
+      margin-bottom:20px;
+    }
+
+    /* Stepper */
+    .stepper{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:20px;
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .step-bullets{
+      display:flex;
+      gap:8px;
+    }
+    .step-circle{
+      width:18px;
+      height:18px;
+      border-radius:999px;
+      border:2px solid rgba(0,0,0,.25);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:11px;
+      background:transparent;
+    }
+    .step-labels{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .step-label{
+      opacity:.45;
+    }
+
+    .step-circle.is-active{
+      border-color:var(--reserve-accent);
+      background:var(--reserve-accent);
+      color:#fff;
+    }
+    .step-label.is-active{
+      opacity:1;
+      color:var(--reserve-accent);
+    }
+
+    /* Steps */
+    .step{
+      display:none;
+    }
+    .step.is-active{
+      display:block;
+    }
+
+    .form-row{
+      display:flex;
+      gap:12px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
+    }
+
+    .form-field{
+      flex:1 1 120px;
+      font-size:13px;
+    }
+
+    .form-field label{
+      display:block;
+      margin-bottom:4px;
+      font-weight:600;
+      font-size:12px;
+    }
+
+    .form-field input,
+    .form-field select{
+      width:100%;
+      box-sizing:border-box;
+      border-radius:999px;
+      border:none;
+      padding:8px 12px;
+      font-size:13px;
+      box-shadow:0 1px 3px rgba(0,0,0,.18);
+      background:#fff;
+    }
+
+    .form-field textarea{
+      width:100%;
+      box-sizing:border-box;
+      border-radius:16px;
+      border:none;
+      padding:8px 12px;
+      font-size:13px;
+      box-shadow:0 1px 3px rgba(0,0,0,.18);
+      background:#fff;
+      resize:vertical;
+      min-height:70px;
+    }
+
+    .form-help{
+      font-size:11px;
+      opacity:.65;
+      margin-top:4px;
+    }
+
+    /* Table grid (step 2) */
+    .table-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:10px;
+      margin-top:12px;
+      margin-bottom:4px;
+    }
+
+    .table-btn{
+      border:none;
+      border-radius:16px;
+      padding:10px 4px 8px;
+      background:#fff;
+      box-shadow:0 1px 3px rgba(0,0,0,.16);
+      cursor:pointer;
+      text-align:center;
+      font-size:11px;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .table-num{
+      font-size:16px;
+      font-weight:700;
+    }
+
+    .table-pos{
+      font-size:10px;
+      opacity:.7;
+    }
+
+    .table-btn.is-selected{
+      background:var(--reserve-accent);
+      color:#fff;
+    }
+
+    .table-btn.is-disabled{
+      opacity:.35;
+      cursor:not-allowed;
+      text-decoration:line-through;
+    }
+
+    /* Summary (step 3) */
+    .summary-card{
+      border-radius:18px;
+      background:#fff;
+      padding:12px 14px;
+      box-shadow:0 1px 4px rgba(0,0,0,.18);
+      margin-bottom:14px;
+      font-size:13px;
+    }
+
+    .summary-row{
+      display:flex;
+      gap:10px;
+      margin-bottom:8px;
+      align-items:flex-start;
+    }
+
+    .summary-icon{
+      width:18px;
+      text-align:center;
+      font-size:15px;
+    }
+
+    .summary-row strong{
+      display:block;
+    }
+
+    /* Nav buttons */
+    .step-nav{
+      margin-top:18px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .nav-btn{
+      flex:1;
+      border-radius:999px;
+      padding:9px 12px;
+      border:none;
+      font-size:13px;
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      cursor:pointer;
+    }
+
+    .nav-btn.secondary{
+      background:transparent;
+      border:1px solid rgba(0,0,0,.2);
+      color:#333;
+    }
+
+    .nav-btn.primary{
+      background:var(--reserve-accent);
+      color:#fff;
+    }
+
+    .nav-btn:disabled{
+      opacity:.4;
+      cursor:default;
+    }
+
+    /* Preview panel */
+    .preview-header{
+      margin-bottom:16px;
+    }
+    .preview-header h2{
+      margin:0 0 6px;
+      font-size:22px;
+    }
+    .preview-header p{
+      margin:0;
+      font-size:14px;
+      opacity:.75;
+    }
+
+    .preview-photo{
+      border-radius:18px;
+      overflow:hidden;
+      margin-bottom:14px;
+      position:relative;
+    }
+
+    .preview-photo img{
+      display:block;
+      width:100%;
+      height:210px;
+      object-fit:cover;
+    }
+
+    .preview-photo-overlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom,rgba(0,0,0,.25),rgba(0,0,0,.75));
+    }
+
+    .preview-details{
+      font-size:13px;
+    }
+
+    .preview-details h3{
+      margin:0 0 8px;
+      font-size:15px;
+    }
+
+    .preview-details dl{
+      margin:0;
+      display:grid;
+      grid-template-columns:auto 1fr;
+      column-gap:12px;
+      row-gap:6px;
+      font-size:12px;
+    }
+
+    .preview-details dt{
+      opacity:.7;
+    }
+
+    .success-overlay{
+      display:none;
+      margin-top:18px;
+      padding:14px 16px;
+      border-radius:18px;
+      background:#fff;
+      font-size:13px;
+      box-shadow:0 1px 4px rgba(0,0,0,.18);
+    }
+
+    .success-overlay.is-visible{
+      display:block;
+    }
+
+    .success-main{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:8px;
+    }
+
+    .success-icon{
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      border:4px solid var(--reserve-success);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      color:var(--reserve-success);
+    }
+
+    .success-title{
+      font-size:17px;
+      margin:0 0 4px;
+    }
+
+    .success-text{
+      margin:0;
+      opacity:.8;
+    }
+
+    .success-note{
+      font-size:11px;
+      opacity:.65;
+      margin:0;
+    }
+
+    .booking-policy{
+      margin-top:20px;
+      font-size:12px;
+      background:rgba(255,255,255,0.85);
+      border-radius:14px;
+      padding:10px 12px;
+      line-height:1.5;
+    }
+    .booking-policy h3{
+      margin:0 0 6px;
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      opacity:.8;
+    }
+    .booking-policy ul{
+      margin:0;
+      padding-left:18px;
+    }
+    .booking-policy li{
+      margin-bottom:4px;
+    }
+
+    @media (max-width: 900px){
+      .reserve-container{
+        grid-template-columns:minmax(0,1fr);
+      }
+    }
+
+    @media (max-width: 600px){
+      main.reserve-main{
+        padding:24px 10px 40px;
+      }
+      .reserve-panel,
+      .preview-panel{
+        border-radius:22px;
+        padding:18px 16px 22px;
+      }
+    }
+  </style>
+</head>
+<body class="reserve-page">
+
+<header class="header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="Palmis — Home">
+      <img src="assets/logo/palmis-logo-cropped.jpg" alt="Palmis" class="logo">
+    </a>
+
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="inside.html">Inside</a>
+      <a href="reserve.html" class="btn active">Reserve</a>
+
+      <div class="lang-selector" id="lang">
+        <button id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span id="lang-flag" class="fi fi-gb" aria-hidden="true"></span>
+          <span id="lang-code">EN</span>
+          <span aria-hidden="true">▾</span>
+        </button>
+
+        <ul id="lang-menu" role="listbox" tabindex="-1" hidden>
+          <li role="option" data-lang="en" tabindex="0"><span class="fi fi-gb"></span> EN</li>
+          <li role="option" data-lang="fr" tabindex="0"><span class="fi fi-fr"></span> FR</li>
+          <li role="option" data-lang="pl" tabindex="0"><span class="fi fi-pl"></span> PL</li>
+          <li role="option" data-lang="es" tabindex="0"><span class="fi fi-es"></span> ES</li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="reserve-main">
+  <div class="reserve-container">
+
+    <!-- LEFT: preview / context -->
+    <section class="preview-panel">
+      <div class="preview-header">
+        <h2>Reserve a table at Palmis</h2>
+        <p>See your booking details as you go.</p>
+      </div>
+
+      <div class="preview-photo">
+        <img src="assets/lalo.jpg" alt="Palmis restaurant interior">
+        <div class="preview-photo-overlay"></div>
+      </div>
+
+      <div class="preview-details">
+        <h3>Your reservation</h3>
+        <dl>
+          <dt>Date:</dt><dd id="preview-date">–</dd>
+          <dt>Time:</dt><dd id="preview-time">–</dd>
+          <dt>People:</dt><dd id="preview-people">–</dd>
+          <dt>Table:</dt><dd id="preview-table">–</dd>
+        </dl>
+      </div>
+
+      <div class="success-overlay" id="successBox">
+        <div class="success-main">
+          <div class="success-icon">✓</div>
+          <div>
+            <p class="success-title">Your reservation is confirmed!</p>
+            <p class="success-text" id="successSummary"></p>
+          </div>
+        </div>
+        <p class="success-note">
+          Note: If the customer does not show up 10 minutes after the time selected, this will be considered a cancellation.
+        </p>
+      </div>
+    </section>
+
+    <!-- RIGHT: 3-step flow -->
+    <section class="reserve-panel">
+      <div class="stepper">
+        <div class="step-bullets">
+          <div class="step-circle is-active" data-step-dot="0">1</div>
+          <div class="step-circle" data-step-dot="1">2</div>
+          <div class="step-circle" data-step-dot="2">3</div>
+        </div>
+        <div class="step-labels">
+          <span class="step-label is-active" data-step-label="0">Details</span>
+          <span class="step-label" data-step-label="1">Choose table</span>
+          <span class="step-label" data-step-label="2">Confirm</span>
+        </div>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step is-active" data-step="0">
+        <h1 class="reserve-title">Pick your date and time</h1>
+        <p class="reserve-sub">First choose your date, time and number of people.</p>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="resDate">Date</label>
+            <input type="date" id="resDate">
+          </div>
+          <div class="form-field">
+            <label for="resTime">Time</label>
+            <select id="resTime">
+              <option value="">Select…</option>
+              <option>14:00</option>
+              <option>14:30</option>
+              <option>15:00</option>
+              <option>15:30</option>
+              <option>16:00</option>
+              <option>16:30</option>
+              <option>17:00</option>
+              <option>17:30</option>
+              <option>18:00</option>
+              <option>18:30</option>
+              <option>19:00</option>
+              <option>19:30</option>
+              <option>20:00</option>
+              <option>20:30</option>
+              <option>21:00</option>
+              <option>21:30</option>
+              <option>22:00</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="resPeople">How many people?</label>
+            <input type="number" id="resPeople" min="1" max="8" value="2">
+            <p class="form-help">We recommend reserving for 1–8 guests online.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="resNotes">Comments regarding the reservation</label>
+            <textarea id="resNotes" placeholder="Allergies, birthday, preferred area…"></textarea>
+            <p class="form-help">Optional – tell us anything we should know.</p>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="nav-btn secondary" type="button" disabled>Back</button>
+          <button class="nav-btn primary" type="button" id="step1Next">Next</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step" data-step="1">
+        <h2 class="reserve-title">Now it’s time to choose your table…</h2>
+        <p class="reserve-sub">Window seats, central tables and cosy corners — choose the table that suits you best.</p>
+
+        <div class="table-grid" id="tableGrid">
+          <button class="table-btn" data-table="1" data-pos="Window">
+            <span class="table-num">1</span>
+            <span class="table-pos">Window · 2 seats</span>
+          </button>
+          <button class="table-btn" data-table="2" data-pos="Window">
+            <span class="table-num">2</span>
+            <span class="table-pos">Window · 4 seats</span>
+          </button>
+          <button class="table-btn" data-table="3" data-pos="Central">
+            <span class="table-num">3</span>
+            <span class="table-pos">Central · 2 seats</span>
+          </button>
+          <button class="table-btn" data-table="4" data-pos="Central">
+            <span class="table-num">4</span>
+            <span class="table-pos">Central · 4 seats</span>
+          </button>
+          <button class="table-btn" data-table="5" data-pos="Window">
+            <span class="table-num">5</span>
+            <span class="table-pos">Window · 2 seats</span>
+          </button>
+          <button class="table-btn is-disabled" disabled data-table="6" data-pos="Central">
+            <span class="table-num">6</span>
+            <span class="table-pos">Reserved</span>
+          </button>
+          <button class="table-btn" data-table="7" data-pos="Central">
+            <span class="table-num">7</span>
+            <span class="table-pos">Central · 2 seats</span>
+          </button>
+          <button class="table-btn" data-table="8" data-pos="Corner">
+            <span class="table-num">8</span>
+            <span class="table-pos">Corner · 2 seats</span>
+          </button>
+        </div>
+
+        <div class="form-help">Greyed out tables are already reserved.</div>
+
+        <div class="step-nav">
+          <button class="nav-btn secondary" type="button" id="step2Back">Back</button>
+          <button class="nav-btn primary" type="button" id="step2Next" disabled>Book table</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step" data-step="2">
+        <h2 class="reserve-title">Confirm reservation?</h2>
+        <p class="reserve-sub">Please review your reservation details before confirming.</p>
+
+        <div class="summary-card">
+          <div class="summary-row">
+            <div class="summary-icon">📍</div>
+            <div>
+              <strong>Palmis Restaurant</strong>
+              <span>Warm minimalist Caribbean kitchen & bar.</span>
+            </div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-icon">📅</div>
+            <div>
+              <strong id="sumDate">–</strong>
+              <span id="sumTimePeople">–</span>
+            </div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-icon">🍽️</div>
+            <div>
+              <strong id="sumTable">Table –</strong>
+              <span>We’ll hold your table for 10 minutes after the selected time.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Your details -->
+        <h3 style="font-size:14px; margin:6px 0 8px;">Your details</h3>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="guestFirst">First name *</label>
+            <input type="text" id="guestFirst">
+          </div>
+          <div class="form-field">
+            <label for="guestLast">Last name *</label>
+            <input type="text" id="guestLast">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="guestEmail">Email for confirmation *</label>
+            <input type="email" id="guestEmail">
+            <p class="form-help">We’ll send your confirmation to this address.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="guestPhone">Phone (optional)</label>
+            <input type="tel" id="guestPhone" placeholder="+48 …">
+            <p class="form-help">Optional contact number.</p>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="nav-btn secondary" type="button" id="step3Back">Back</button>
+          <button class="nav-btn primary" type="button" id="confirmBtn">Confirm</button>
+        </div>
+      </div>
+
+      <!-- Booking policy -->
+      <section class="booking-policy">
+        <h3>Booking policy</h3>
+        <ul>
+          <li>Online reservations are available for 1–8 guests. For larger groups, please contact us directly.</li>
+          <li>We hold your table for 10 minutes after the reserved time.</li>
+          <li>Please let us know about allergies or special requests in the comments field.</li>
+          <li>To cancel or change your booking, contact us at least 2 hours in advance.</li>
+        </ul>
+      </section>
+
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <p>© 2025 Palmis | Caribbean Restaurant Concept</p>
+</footer>
+
+<script>
+(function(){
+  const flagMap = { en:'gb', fr:'fr', pl:'pl', es:'es' };
+  const langs = Object.keys(flagMap);
+
+  const btn   = document.getElementById('lang-btn');
+  const menu  = document.getElementById('lang-menu');
+  const flag  = document.getElementById('lang-flag');
+  const code  = document.getElementById('lang-code');
+  const wrap  = document.getElementById('lang');
+
+  const getLang = () => {
+    const parts = location.pathname.split('/').filter(Boolean);
+    return langs.includes(parts[0]) ? parts[0] : 'en';
+  };
+  const getPage = () => (location.pathname.split('/').pop() || 'reserve.html');
+  const buildUrl = (targetLang) => {
+    const cur = getLang(), page = getPage();
+    if (cur === 'en') return targetLang === 'en' ? page : `${targetLang}/${page}`;
+    if (targetLang === 'en') return `../${page}`;
+    if (targetLang === cur)  return page;
+    return `../${targetLang}/${page}`;
+  };
+
+  function syncUI(){
+    const cur = getLang();
+    flag.className = `fi fi-${flagMap[cur]}`;
+    code.textContent = cur.toUpperCase();
+    [...menu.children].forEach(li=>{
+      li.setAttribute('aria-selected', li.dataset.lang === cur ? 'true' : 'false');
+    });
+  }
+
+  function openMenu(){
+    menu.hidden = false;
+    btn.setAttribute('aria-expanded','true');
+    const cur = getLang();
+    const li = [...menu.children].find(x=>x.dataset.lang===cur) || menu.firstElementChild;
+    li && li.focus && li.focus();
+  }
+  function closeMenu(){
+    menu.hidden = true;
+    btn.setAttribute('aria-expanded','false');
+  }
+
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    menu.hidden ? openMenu() : closeMenu();
+  });
+
+  menu.addEventListener('click', (e)=>{
+    const li = e.target.closest('li[data-lang]');
+    if(!li) return;
+    const lang = li.dataset.lang;
+    location.href = buildUrl(lang);
+  });
+
+  document.addEventListener('keydown', (e)=>{
+    if(menu.hidden) return;
+    const items = [...menu.querySelectorAll('li[data-lang]')];
+    const current = document.activeElement.closest('li[data-lang]');
+    let idx = items.indexOf(current);
+    if(e.key === 'ArrowDown'){ e.preventDefault(); items[Math.min(idx+1, items.length-1)].focus(); }
+    if(e.key === 'ArrowUp'){   e.preventDefault(); items[Math.max(idx-1, 0)].focus(); }
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); current && current.click(); }
+    if(e.key === 'Escape'){ closeMenu(); btn.focus(); }
+  });
+
+  document.addEventListener('click', (e)=>{
+    if(!wrap.contains(e.target)) closeMenu();
+  });
+
+  syncUI();
+})();
+
+/* Reservation logic */
+(function(){
+  const steps   = document.querySelectorAll('[data-step]');
+  const dots    = document.querySelectorAll('[data-step-dot]');
+  const labels  = document.querySelectorAll('[data-step-label]');
+
+  const resDate   = document.getElementById('resDate');
+  const resTime   = document.getElementById('resTime');
+  const resPeople = document.getElementById('resPeople');
+  const resNotes  = document.getElementById('resNotes');
+
+  const guestFirst = document.getElementById('guestFirst');
+  const guestLast  = document.getElementById('guestLast');
+  const guestEmail = document.getElementById('guestEmail');
+  const guestPhone = document.getElementById('guestPhone');
+
+  const step1Next  = document.getElementById('step1Next');
+  const step2Back  = document.getElementById('step2Back');
+  const step2Next  = document.getElementById('step2Next');
+  const step3Back  = document.getElementById('step3Back');
+  const confirmBtn = document.getElementById('confirmBtn');
+
+  const tableGrid = document.getElementById('tableGrid');
+  let selectedTable = null;
+  let selectedPos   = null;
+
+  const sumDate  = document.getElementById('sumDate');
+  const sumTP    = document.getElementById('sumTimePeople');
+  const sumTable = document.getElementById('sumTable');
+
+  const previewDate   = document.getElementById('preview-date');
+  const previewTime   = document.getElementById('preview-time');
+  const previewPeople = document.getElementById('preview-people');
+  const previewTable  = document.getElementById('preview-table');
+
+  const successBox     = document.getElementById('successBox');
+  const successSummary = document.getElementById('successSummary');
+
+  function goToStep(index){
+    steps.forEach(s => s.classList.toggle('is-active', Number(s.dataset.step) === index));
+    dots.forEach(d => d.classList.toggle('is-active', Number(d.dataset.stepDot) === index));
+    labels.forEach(l => l.classList.toggle('is-active', Number(l.dataset.stepLabel) === index));
+  }
+
+  function formatDate(dStr){
+    if(!dStr) return '';
+    const d = new Date(dStr);
+    if(isNaN(d)) return dStr;
+    return d.toLocaleDateString(undefined,{
+      weekday:'long',
+      day:'numeric',
+      month:'short',
+      year:'numeric'
+    });
+  }
+
+  function syncPreview(){
+    previewDate.textContent   = resDate.value ? formatDate(resDate.value) : '–';
+    previewTime.textContent   = resTime.value || '–';
+    previewPeople.textContent = resPeople.value ? resPeople.value + ' people' : '–';
+    previewTable.textContent  = selectedTable ? `Table ${selectedTable}${selectedPos ? ', '+selectedPos : ''}` : '–';
+  }
+
+  function canGoStep1(){
+    return resDate.value && resTime.value && resPeople.value;
+  }
+
+  resDate.addEventListener('input', syncPreview);
+  resTime.addEventListener('input', syncPreview);
+  resPeople.addEventListener('input', syncPreview);
+
+  step1Next.addEventListener('click', ()=>{
+    if(!canGoStep1()){
+      alert('Please select date, time and number of people.');
+      return;
+    }
+    syncPreview();
+    goToStep(1);
+  });
+
+  tableGrid.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.table-btn');
+    if(!btn || btn.classList.contains('is-disabled')) return;
+    tableGrid.querySelectorAll('.table-btn').forEach(b=>b.classList.remove('is-selected'));
+    btn.classList.add('is-selected');
+    selectedTable = btn.dataset.table;
+    selectedPos   = btn.dataset.pos;
+    step2Next.disabled = false;
+    syncPreview();
+  });
+
+  step2Back.addEventListener('click', ()=> goToStep(0));
+
+  step2Next.addEventListener('click', ()=>{
+    if(!selectedTable){
+      alert('Please choose a table.');
+      return;
+    }
+    sumDate.textContent = formatDate(resDate.value);
+    sumTP.textContent   = (resTime.value || '') + ' · ' + (resPeople.value || '2') + ' people';
+    sumTable.textContent = 'Table ' + selectedTable + (selectedPos ? ', ' + selectedPos + ' seats' : '');
+    goToStep(2);
+  });
+
+  step3Back.addEventListener('click', ()=> goToStep(1));
+
+  confirmBtn.addEventListener('click', ()=>{
+    if (!guestFirst.value.trim() || !guestLast.value.trim() || !guestEmail.value.trim()) {
+      alert('Please enter your first name, last name and email so we can confirm your reservation.');
+      return;
+    }
+
+    const niceDate = formatDate(resDate.value);
+    const fullName = guestFirst.value.trim() + ' ' + guestLast.value.trim();
+    const email    = guestEmail.value.trim();
+    const people   = resPeople.value || '2';
+
+    const txt = `${fullName}, your table ${selectedTable} for ${people} people on ${niceDate} at ${resTime.value} is booked. We’ll send a confirmation to ${email}.`;
+    successSummary.textContent = txt;
+    successBox.classList.add('is-visible');
+    syncPreview();
+  });
+
+  const today = new Date();
+  resDate.valueAsDate = today;
+  syncPreview();
+})();
+</script>
+</body>
+</html>
