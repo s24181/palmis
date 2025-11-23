@@ -675,6 +675,683 @@ body {
   overflow-x: hidden;
 }
 
+/* ==================== TOKENS ==================== */
+:root{
+  --brand:#FCA384;      /* peach accent */
+  --accent:#A93528;     /* deep warm red */
+  --bg:#FFEFE6;         /* warm page background */
+  --text:#1E1E1E;
+
+  --gold:#C7A968;       /* gold accents */
+  --about-card:#FBF4EF; /* cream card */
+
+  --peach-vertical:#FFE9E1;
+}
+
+/* ==================== GLOBAL ==================== */
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+html{
+  overflow-y: scroll;   /* always reserve space for scrollbar */
+}
+
+body.reserve-page{
+  /* keep same font + colors from body, only override background */
+  background: url('table.jpeg') center center / cover no-repeat fixed;
+  background-color:#000;   /* fallback if image fails */
+}
+
+h1,h2,h3,h4,h5,h6,p,span{ user-select:none; cursor:default; }
+body,body *{ user-select:none; cursor:default; }
+a,button,.btn,[role="button"],.clickable{ user-select:auto; cursor:pointer; }
+
+/* ==================== HEADER ==================== */
+.header{
+  background:#000;     /* or your pink */
+  color:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,.25);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.header .container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:8px 30px;           /* this + logo height = same bar on every page */
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+/* brand link */
+.header .brand{
+  display:flex;
+  align-items:center;
+  background:transparent!important;
+  box-shadow:none!important;
+  outline:none!important;
+  border:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* logo */
+.logo{
+  height:52px;                /* same everywhere */
+  width:auto;
+  display:block;
+  border:0;
+  box-shadow:none;
+  margin:0;
+}
+
+/* nav + language spacing */
+.nav{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.nav a{
+  text-decoration:none;
+  color:#fff;
+  font-weight:600;
+  padding:8px 0;               /* base padding for all tabs */
+}
+
+/* 🔸 Active page = big pill */
+.nav a.active{
+  background:linear-gradient(90deg,var(--brand),var(--accent));
+  color:#fff;
+  padding:10px 16px;           /* pill padding */
+  border-radius:999px;
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
+}
+
+/* hover (for non-active links) */
+.nav a:not(.active):hover{
+  color:var(--brand);
+}
+
+/* Keep .btn for hero / other buttons */
+.btn{
+  background:linear-gradient(90deg,var(--brand),var(--accent));
+  color:#fff;
+  padding:10px 16px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:700;
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
+}
+
+
+/* logo link: no highlight */
+.header .brand{
+  display:inline-block; background:transparent!important;
+  box-shadow:none!important; outline:none!important; border:0;
+  -webkit-tap-highlight-color:transparent;
+}
+.header .brand:hover,
+.header .brand:active,
+.header .brand:focus,
+.header .brand:focus-visible{
+  background:transparent!important; box-shadow:none!important;
+  outline:none!important;
+}
+
+/* nav + language spacing */
+.nav{ display:flex; align-items:center; gap:28px; }
+.nav a{ text-decoration:none; color:#fff; font-weight:600; }
+.nav a.active, .nav a:hover{ color:var(--brand); }
+
+/* Reserve button (gradient pill) */
+.btn{
+  background:linear-gradient(90deg,var(--brand),var(--accent));
+  color:#fff; padding:10px 16px;
+  border-radius:999px; text-decoration:none;
+  font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.25);
+}
+
+/* ==================== LANGUAGE DROPDOWN (custom, compact) ==================== */
+.lang-selector{
+  margin-left:20px;
+  display:inline-block;
+  transform: translateY(-1px); /* tiny optical tweak */
+}
+#lang{ position:relative; }
+
+#lang-btn{
+  display:flex; align-items:center; gap:6px;
+  background:#111; color:#fff; border:1px solid #2a2a2a;
+  padding:4px 8px;
+  border-radius:10px;
+  font-weight:700;
+  font-size:13px;
+  line-height:1;
+}
+#lang-btn .fi,
+#lang-menu .fi{
+  width:16px; height:16px;
+  border-radius:50%; display:inline-block;
+}
+
+/* dropdown panel */
+#lang-menu{
+  position:absolute;
+  top:105%;                  /* close to button */
+  right:50%;                 /* start centering */
+  transform:translateX(50%); /* center under button */
+  width:90%;                 /* slightly smaller than button */
+  background:#fff;
+  color:#111;
+  border:1px solid #e5e5e5;
+  border-radius:10px;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+  padding:4px;
+  margin:0;
+  list-style:none;
+  z-index:200;
+}
+#lang-menu[hidden]{ display:none; }
+
+#lang-menu li{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 8px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:14px;
+}
+#lang-menu li:hover,
+#lang-menu li[aria-selected="true"]{
+  background:#f3f3f3;
+}
+
+/* ==================== HERO ==================== */
+.hero{ text-align:center; padding:60px 20px; }
+.hero-bg{
+  background:url('restaurant-bg.jpg') center/cover no-repeat;
+  height:80vh; color:#fff;
+  display:flex; justify-content:center; align-items:center;
+}
+.hero-bg .overlay{
+  background:rgba(0,0,0,.35);
+  padding:40px; border-radius:12px;
+  animation:fadeInUp 1.2s ease-out;
+}
+.brand-text{
+  background:linear-gradient(90deg,var(--brand),var(--accent));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+@keyframes fadeInUp{
+  0%{ opacity:0; transform:translateY(20px); }
+  100%{ opacity:1; transform:translateY(0); }
+}
+
+/* ==================== OUR VIBE ==================== */
+.gallery{
+  --peach-bg:#FFA98E; --ink:#3B1E15;
+  background:var(--peach-bg); color:var(--ink);
+  padding:80px 20px; text-align:center; position:relative; overflow:hidden;
+}
+.gallery::before{
+  content:""; position:absolute; inset:0; z-index:0; opacity:.06;
+  background-size:180px 180px; background-repeat:repeat;
+  background-image:url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%233B1E15'%3E%3Cpath d='M84 36c16 0 28 10 28 22S100 80 84 80 56 70 56 58 68 36 84 36z' fill-opacity='.25'/%3E%3Cpath d='M130 110c14 0 24 8 24 18s-10 18-24 18-24-8-24-18 10-18 24-18z' fill-opacity='.18'/%3E%3Cpath d='M26 124c10-8 24-8 34 0-10 8-24 8-34 0z' fill-opacity='.16'/%3E%3C/g%3E%3C/svg%3E");
+}
+.gallery h2{
+  color:#6A261C; margin-bottom:40px;
+  font-size:2rem; position:relative; z-index:1;
+}
+.gallery .grid{
+  position:relative; z-index:1;
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:26px; align-items:stretch;
+}
+.gallery .item{
+  display:flex; flex-direction:column; height:100%; box-sizing:border-box;
+  background:rgba(255,255,255,.35); border-radius:16px; padding:12px;
+  box-shadow:0 10px 20px rgba(0,0,0,.12);
+}
+.gallery .thumb{
+  position:relative; width:100%; height:320px;
+  border-radius:16px; overflow:hidden; margin:0;
+}
+.gallery .thumb img{
+  width:100%; height:100%; object-fit:cover; object-position:center;
+  display:block; transition:transform .3s ease, box-shadow .3s ease;
+}
+.gallery .thumb img:hover{
+  transform:scale(1.05);
+  box-shadow:0 14px 28px rgba(0,0,0,.22);
+}
+.gallery .caption{
+  margin:12px 8px 0; font-size:1rem; line-height:1.35;
+  min-height:2.7em; display:flex; align-items:center; justify-content:center;
+  text-wrap:balance;
+}
+
+/* ==================== FOOTER ==================== */
+.footer{
+  text-align:center; padding:25px; color:#fff; font-size:14px;
+  background:#6A261C; margin-top:0;
+  box-shadow:0 -2px 10px rgba(0,0,0,.2);
+}
+
+/* ==================== ABOUT (photo blend + card) ==================== */
+.about-blend{
+  position:relative; min-height:85vh; overflow:hidden;
+  display:flex; align-items:center; justify-content:flex-end;
+  padding:clamp(18px, 3vw, 28px);
+}
+.about-blend .about-bg{ position:absolute; inset:0; z-index:0; overflow:hidden; }
+.about-blend .about-bg img{
+  position:absolute; top:50%; left:50%;
+  width:130%; height:auto; min-height:100%;
+  transform:translate(-50%,-50%) scale(1.08);
+  object-fit:cover; object-position:center; display:block;
+}
+.about-blend .about-bg::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(to right, rgba(0,0,0,.65) 0%, rgba(0,0,0,.45) 40%, rgba(0,0,0,.15) 70%, rgba(0,0,0,0) 100%);
+}
+.about-blend .gold-frame{
+  position:absolute; inset:clamp(12px, 2.4vw, 24px);
+  border:2px solid var(--gold); border-radius:8px; z-index:1; pointer-events:none;
+}
+.about-blend .container{
+  position:relative; z-index:2; display:flex;
+  justify-content:flex-end; width:100%;
+}
+.about-card{
+  background:var(--about-card); color:#3b2419;
+  padding:clamp(20px, 4vw, 44px);
+  border-radius:10px; box-shadow:0 18px 50px rgba(0,0,0,.35);
+  max-width:680px; margin-right:clamp(3vw, 8vw, 100px); text-align:left;
+}
+.about-card h2{
+  margin:0 0 8px; line-height:1.05;
+  font-size:clamp(26px, 5.2vw, 42px); font-weight:800;
+}
+.about-card h3{
+  margin:0 0 14px; font-weight:600;
+  font-size:clamp(18px, 2.2vw, 22px); color:#5a3326;
+}
+.about-card p{ line-height:1.75; margin:0 0 10px; }
+.about-card em{ font-style:italic; }
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width:900px){
+  .about-blend{
+    flex-direction:column; justify-content:center; min-height:70vh;
+  }
+  .about-card{ margin:20px auto; text-align:center; }
+  .about-blend .about-bg::after{
+    background:linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.35) 40%, rgba(0,0,0,.15) 80%, rgba(0,0,0,0) 100%);
+  }
+}
+
+/* === Vertical peach card variant tweaks === */
+.about-vertical{
+  max-width:420px; width:clamp(300px, 28vw, 420px); min-height:70vh;
+  display:flex; flex-direction:column; justify-content:center; gap:10px;
+  background:linear-gradient(180deg,#FFF3EE 0%, var(--peach-vertical) 100%);
+  color:#3b2419; border-radius:20px; padding:clamp(22px, 3.6vw, 36px);
+  box-shadow:0 20px 50px rgba(0,0,0,.35); position:relative; overflow:hidden;
+}
+.about-vertical::before,
+.about-vertical::after{
+  content:""; position:absolute; top:12px; bottom:12px; width:2px; border-radius:2px;
+  background:linear-gradient(#d8c493, #c7a968, #d8c493); opacity:.9;
+}
+.about-vertical::before{ left:12px; }
+.about-vertical::after{ right:12px; }
+.about-vertical .topline{
+  height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity:.7; margin:2px 0 10px;
+}
+.about-vertical h2{
+  margin:0 0 6px; font-size:clamp(24px, 3.6vw, 36px);
+  line-height:1.1; letter-spacing:.4px; font-weight:800;
+}
+.about-vertical h3{
+  margin:0 6px 12px 0; font-size:clamp(16px, 1.6vw, 20px);
+  color:#5a3326; font-weight:600;
+}
+.about-vertical p{
+  margin:0 0 10px; line-height:1.7;
+  font-size:clamp(14px, 1.15vw, 17px);
+}
+
+/* ==================== INSIDE (STATIC IMAGE STAGE) ==================== */
+.stage-static{
+  height: calc(100vh - 70px);
+  width: 100%;
+  background: #000;
+  overflow: hidden;
+}
+.stage-static img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;       /* fills the area */
+  object-position: center; /* center the pano */
+  display: block;
+}
+
+/* Optional: make it printer-friendly */
+@media print{
+  .header, .footer{ display: none !important; }
+  .stage-static{ height: auto; }
+  .stage-static img{ width: 100%; height: auto; }
+}
+
+/* ==================== MENU PAGE (TABS + CARDS) ==================== */
+
+.menu-page {
+  padding-bottom: 4rem;
+}
+
+.menu-hero {
+  padding: 4rem 0 2rem;
+  text-align: center;
+}
+
+/* tabs */
+.menu-tabs {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+}
+.menu-tabs .container {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.menu-tab {
+  border: 1px solid var(--brand);
+  background: transparent;
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.menu-tab.is-active {
+  background: var(--brand);
+  color: #fff;
+}
+
+/* sections */
+.menu-section {
+  display: none;
+  padding: 1rem 0 3rem;
+}
+.menu-section.is-active {
+  display: block;
+}
+
+/* grid */
+.menu-grid {
+  display: grid;
+  gap: 2rem;
+}
+@media (min-width: 640px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .menu-grid {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+  }
+}
+
+/* ===== MENU CARD – same shape as "Our Vibe", full #70071A background ===== */
+
+.menu-card {
+  background: #E7A98C;     /* the sampled peach color */
+  color: #3B1E15;          /* dark brown text for contrast */
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,.25);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
+.menu-card:hover {
+  transform: translateY(-4px);
+}
+
+/* container around the image – copy of .gallery .thumb */
+.menu-photo {
+  position: relative;
+  width: 100%;
+  height: 320px;                    /* same height as index cards */
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* image itself – copy of .gallery .thumb img */
+.menu-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.menu-photo img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 14px 28px rgba(0,0,0,.22);
+}
+
+/* text area under the photo */
+.menu-body {
+  padding: 12px 8px 4px;
+  flex: 1;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.3rem;
+}
+
+.menu-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.menu-price {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #ffe7e7;
+  white-space: nowrap;
+}
+
+.menu-desc {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 0.9rem;
+  color: #ffe9e9;
+  line-height: 1.4;
+}
+
+/* tags */
+.menu-tags {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.tag-spicy {
+  border-color: #ffb6b6;
+  background: rgba(255,0,0,0.25);
+}
+
+/* ==================== FOOTER ==================== */
+.footer {
+  background: #A93528;          /* brown footer */
+  color: #fff;
+  padding: 50px 30px 20px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,.2);
+}
+
+/* Layout wrapper (no background here = no white box) */
+.footer-info {
+  max-width: 1200px;
+  margin: 0 auto 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* Columns */
+.footer-col h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.footer-col p {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+/* Map */
+.footer-map iframe {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* LOGO centered + bigger */
+.footer-logo-wrap {
+  text-align: center;
+}
+
+.footer-logo {
+  height: 200px;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Reserve button */
+.footer-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: #fff;
+  color: #A93528;
+  font-weight: 700;
+  text-decoration: none;
+  margin-bottom: 16px;
+}
+
+/* Social icons */
+.footer-socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.footer-socials a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: background .2s, color .2s;
+}
+
+.footer-socials a:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+
+/* Copyright line */
+.footer-copy {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+/* Mobile responsive */
+@media (max-width: 900px) {
+  .footer-info {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .footer-logo {
+    height: 160px;
+  }
+}
+/* Oval framed footer logo */
+.footer-logo-wrap {
+  text-align: center;
+}
+
+.footer-logo-frame {
+  width: 240px;          /* bigger oval */
+  height: 240px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255,255,255,0.12);
+  border: 4px solid rgba(255,255,255,0.25);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-logo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* like the cards */
+  object-position: center; /* same crop behavior */
+}
+
+
+/* -------- GLOBAL: stop horizontal scroll on mobile -------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 /* -------- MOBILE HEADER LAYOUT (no sideways scroll) -------- */
 
 @media (max-width: 768px) {
