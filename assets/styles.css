@@ -661,3 +661,54 @@ a,button,.btn,[role="button"],.clickable{ user-select:auto; cursor:pointer; }
 }
 
 
+/* -------- GLOBAL: stop horizontal scroll on mobile -------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* -------- MOBILE HEADER LAYOUT (no sideways scroll) -------- */
+
+@media (max-width: 768px) {
+  .header .container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;          /* allows nav + language to wrap instead of overflowing */
+    gap: 8px 12px;
+    padding: 8px 12px;        /* smaller padding on phones */
+  }
+
+  .brand {
+    flex: 0 0 auto;
+  }
+
+  .logo {
+    max-height: 32px;         /* smaller logo on mobile */
+  }
+
+  .nav {
+    flex: 1 1 100%;           /* nav takes full row */
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;          /* menu items can wrap to second line if needed */
+  }
+
+  .nav a {
+    margin: 4px 6px;          /* remove big left margins */
+    font-size: 0.85rem;
+  }
+
+  .lang-selector {
+    flex: 0 0 auto;
+    margin-left: auto;        /* stays on the right but inside width */
+  }
+}
