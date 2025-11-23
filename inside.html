@@ -204,6 +204,33 @@
                 position="0 1.2 -6.5">
       </a-entity>
     </a-scene>
+<div id="fullview-tip">
+  You are in full view — press ESC to return to normal view.
+</div>
+
+<style>
+  #fullview-tip {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 14px;
+    background: rgba(0,0,0,0.55);
+    color: white;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    z-index: 50;
+    pointer-events: none; /* Don’t block clicks */
+    animation: fadeout 5s forwards;
+  }
+
+  @keyframes fadeout {
+    0% { opacity: 1; }
+    75% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+</style>
+
 
     <!-- Walkthrough buttons -->
     <div class="view-controls">
