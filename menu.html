@@ -30,17 +30,26 @@
 
 <header class="header">
   <div class="container">
+    <!-- Logo / brand -->
     <a class="brand" href="index.html" aria-label="Palmis — Home">
       <img src="assets/logo/palmis-logo-cropped.jpg" alt="Palmis" class="logo">
     </a>
 
-    <nav class="nav">
-      <a href="index.html">Home</a>
-  <a href="menu.html" class="active">Menu</a>
-  <a href="inside.html">Inside</a>
-  <a href="reserve.html">Reserve</a>
+    <!-- Hamburger button (shows on mobile only) -->
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-      <!-- Language (custom dropdown with flags) -->
+    <!-- Navigation + language -->
+    <nav class="nav">
+      <!-- set .active on the current page -->
+      <a href="index.html">Home</a>
+      <a href="menu.html" class="active">Menu</a>
+      <a href="inside.html">Inside</a>
+      <a href="reserve.html">Reserve</a>
+
       <div class="lang-selector" id="lang">
         <button id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
           <span id="lang-flag" class="fi fi-gb" aria-hidden="true"></span>
@@ -58,6 +67,7 @@
     </nav>
   </div>
 </header>
+
 
 <main class="menu-page">
   <!-- Hero / intro -->
@@ -543,6 +553,20 @@
   });
 })();
 </script>
+
+<script>
+  (function(){
+    const header = document.querySelector('.header');
+    const toggle = document.querySelector('.nav-toggle');
+    if (!header || !toggle) return;
+
+    toggle.addEventListener('click', function () {
+      const open = header.classList.toggle('menu-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  })();
+</script>
+
 
 </body>
 </html>

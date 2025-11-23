@@ -87,36 +87,46 @@
 
 <body class="inside-page">
 
-  <!-- HEADER -->
   <header class="header">
-    <div class="container">
-      <a class="brand" href="index.html" aria-label="Palmis — Home">
-        <img src="assets/logo/palmis-logo-cropped.jpg" alt="Palmis" class="logo">
-      </a>
+  <div class="container">
+    <!-- Logo / brand -->
+    <a class="brand" href="index.html" aria-label="Palmis — Home">
+      <img src="assets/logo/palmis-logo-cropped.jpg" alt="Palmis" class="logo">
+    </a>
 
-      <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="menu.html">Menu</a>
-        <a href="inside.html" class="active">Inside</a>
-        <a href="reserve.html">Reserve</a>
+    <!-- Hamburger button (shows on mobile only) -->
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-        <div class="lang-selector" id="lang">
-          <button id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
-            <span id="lang-flag" class="fi fi-gb" aria-hidden="true"></span>
-            <span id="lang-code">EN</span>
-            <span aria-hidden="true">▾</span>
-          </button>
+    <!-- Navigation + language -->
+    <nav class="nav">
+      <!-- set .active on the current page -->
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="inside.html" class="active">Inside</a>
+      <a href="reserve.html">Reserve</a>
 
-          <ul id="lang-menu" role="listbox" tabindex="-1" hidden>
-            <li role="option" data-lang="en" tabindex="0"><span class="fi fi-gb"></span> EN</li>
-            <li role="option" data-lang="fr" tabindex="0"><span class="fi fi-fr"></span> FR</li>
-            <li role="option" data-lang="pl" tabindex="0"><span class="fi fi-pl"></span> PL</li>
-            <li role="option" data-lang="es" tabindex="0"><span class="fi fi-es"></span> ES</li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </header>
+      <div class="lang-selector" id="lang">
+        <button id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span id="lang-flag" class="fi fi-gb" aria-hidden="true"></span>
+          <span id="lang-code">EN</span>
+          <span aria-hidden="true">▾</span>
+        </button>
+
+        <ul id="lang-menu" role="listbox" tabindex="-1" hidden>
+          <li role="option" data-lang="en" tabindex="0"><span class="fi fi-gb"></span> EN</li>
+          <li role="option" data-lang="fr" tabindex="0"><span class="fi fi-fr"></span> FR</li>
+          <li role="option" data-lang="pl" tabindex="0"><span class="fi fi-pl"></span> PL</li>
+          <li role="option" data-lang="es" tabindex="0"><span class="fi fi-es"></span> ES</li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
 
   <!-- 360° VIEWER -->
   <main class="inside-main">
@@ -322,6 +332,20 @@
     syncUI();
   })();
   </script>
+
+
+<script>
+  (function(){
+    const header = document.querySelector('.header');
+    const toggle = document.querySelector('.nav-toggle');
+    if (!header || !toggle) return;
+
+    toggle.addEventListener('click', function () {
+      const open = header.classList.toggle('menu-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  })();
+</script>
 
 </body>
 </html>
