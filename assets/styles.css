@@ -12,15 +12,23 @@
 }
 
 /* ==================== GLOBAL ==================== */
+html{
+  overflow-y: scroll;       /* vertical scroll OK */
+  overflow-x: hidden;       /* 🚫 no horizontal scroll */
+  width: 100%;
+  max-width: 100%;
+}
+
 body{
   margin:0;
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   background:var(--bg);
   color:var(--text);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
-html{
-  overflow-y: scroll;   /* always reserve space for scrollbar */
-}
+
 
 body.reserve-page{
   /* keep same font + colors from body, only override background */
@@ -1338,14 +1346,6 @@ a,button,.btn,[role="button"],.clickable{ user-select:auto; cursor:pointer; }
 }
 
 
-/* -------- GLOBAL: stop horizontal scroll on mobile -------- */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 html,
 body {
   max-width: 100%;
@@ -1361,7 +1361,8 @@ body {
     justify-content: flex-start;
     flex-wrap: wrap;          /* allows nav + language to wrap instead of overflowing */
     gap: 8px 12px;
-    padding: 8px 12px;        /* smaller padding on phones */
+    padding: 8px 12px;  
+max-width: 100%;       /* smaller padding on phones */
   }
 
   .brand {
