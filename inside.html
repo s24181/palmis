@@ -26,7 +26,7 @@
       overflow-x: hidden;
     }
 
-    /* Full-height layout with header at top, footer at bottom */
+    /* Full-height layout: header on top, footer at bottom */
     body.inside-page {
       min-height: 100vh;
       display: flex;
@@ -34,7 +34,7 @@
       background: #000;
     }
 
-    /* Main tour area fills between header & footer */
+    /* Main area fills everything between header & footer */
     main.inside-main {
       flex: 1;
       min-height: 0;
@@ -42,117 +42,129 @@
       background: #000;
     }
 
-    /* Virtual tour wrapper */
-    .vt-container{
+    /* Shell for the virtual tour */
+    .vt-shell {
       flex: 1;
+      width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 8px 16px 16px;
       display: flex;
       flex-direction: column;
+    }
+
+    /* Viewer takes ALL free height */
+    .vt-viewer {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      background: #000;
+      overflow: hidden;
+    }
+
+    /* Panels are stacked, only one visible */
+    .vt-panels {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .vt-panel {
+      position: absolute;
+      inset: 0;
+      display: none;
+    }
+
+    .vt-panel.active {
+      display: block;
+    }
+
+    /* 360° view fills area like hero */
+    .vt-360-wrap {
+      position: absolute;
+      inset: 0;
+    }
+
+    .vt-360-wrap a-scene {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Angle images fill area like hero (cover) */
+    .vt-img-wrap {
+      position: absolute;
+      inset: 0;
+      background: #000;
+    }
+
+    .vt-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;  /* full-bleed like home hero */
+      display: block;
+    }
+
+    /* Tabs overlaid at bottom of the image */
+    .vt-tabs {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding: 6px 10px;
+      background: rgba(0,0,0,0.55);
+      border-radius: 999px;
+      z-index: 30;
+      backdrop-filter: blur(8px);
+    }
+
+    .vt-tab {
+      border: none;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: .8rem;
+      cursor: pointer;
+      background: rgba(255,255,255,0.08);
       color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      white-space: nowrap;
     }
 
-    /* Panels area takes almost all height */
-    .vt-panels{
-      flex: 1;
-      background:#000;
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow:0 14px 28px rgba(0,0,0,.55);
-      display:flex;
+    .vt-tab.active {
+      background: linear-gradient(90deg,var(--brand,#FCA384),var(--accent,#A93528));
+      border-color: transparent;
     }
 
-    .vt-panel{
-      flex: 1;
-      position:relative;
-      display:none;
+    /* Clickable zones on angle images */
+    .table-hotspot {
+      position: absolute;
+      width: 7%;
+      height: 9%;
+      transform: translate(-50%, -50%);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.15); /* set to 0 when done */
+      border: 1px dashed rgba(255,255,255,0.6);
+      cursor: pointer;
     }
 
-    .vt-panel.active{
-      display:block;
+    .table-hotspot:hover {
+      background: rgba(255,255,255,0.30);
     }
 
-    /* 360 viewer uses all available height */
-    .vt-360-wrap{
-      width:100%;
-      height:100%;
-    }
-
-    .vt-360-wrap a-scene{
-      width:100%;
-      height:100%;
-    }
-
-    /* Angle images fill same space as 360 */
-    .vt-img-wrap{
-      position:relative;
-      width:100%;
-      height:100%;
-      overflow:hidden;
-      background:#000;
-    }
-
-    .vt-img-wrap img{
-      width:100%;
-      height:100%;
-      object-fit:cover;   /* big, immersive */
-      display:block;
-    }
-
-    /* Tabs: now at the BOTTOM under the image */
-    .vt-tabs{
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:8px;
-      margin-top:12px;
-    }
-
-    .vt-tab{
-      border:none;
-      padding:6px 14px;
-      border-radius:999px;
-      font-size:.85rem;
-      cursor:pointer;
-      background:rgba(255,255,255,0.05);
-      color:#fff;
-      border:1px solid rgba(255,255,255,0.15);
-    }
-
-    .vt-tab.active{
-      background:linear-gradient(90deg,var(--brand,#FCA384),var(--accent,#A93528));
-      border-color:transparent;
-    }
-
-    /* Clickable zones on images */
-    .table-hotspot{
-      position:absolute;
-      width:7%;
-      height:9%;
-      transform:translate(-50%, -50%);
-      border-radius:8px;
-      background:rgba(255,255,255,0.15); /* make transparent when you’re happy */
-      border:1px dashed rgba(255,255,255,0.6);
-      cursor:pointer;
-    }
-
-    .table-hotspot:hover{
-      background:rgba(255,255,255,0.30);
-    }
-
-    /* Small tip overlay for 360, optional */
+    /* Tip overlay for 360° */
     #fullview-tip {
       position: absolute;
       top: 12px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 8px 14px;
+      padding: 6px 12px;
       background: rgba(0,0,0,0.55);
       color: white;
-      font-size: 0.9rem;
-      border-radius: 6px;
-      z-index: 50;
+      font-size: 0.85rem;
+      border-radius: 999px;
+      z-index: 40;
       pointer-events: none;
       animation: fadeout 5s forwards;
     }
@@ -163,9 +175,14 @@
       100% { opacity: 0; }
     }
 
-    @media (max-width:768px){
-      .vt-container{
-        padding: 8px 8px 12px;
+    @media (max-width: 768px) {
+      .vt-tabs {
+        bottom: 10px;
+        padding: 4px 8px;
+      }
+      .vt-tab {
+        font-size: 0.75rem;
+        padding: 4px 10px;
       }
     }
   </style>
@@ -214,97 +231,96 @@
 
 <!-- MAIN VIRTUAL TOUR CONTENT -->
 <main class="inside-main">
-  <section class="vt-container">
+  <section class="vt-shell">
 
-    <!-- Big viewer (360 or angle) -->
-    <div class="vt-panels">
+    <div class="vt-viewer">
+      <!-- 360 + angle panels -->
+      <div class="vt-panels">
 
-      <!-- 360° PANEL -->
-      <div class="vt-panel active" id="view-360">
-        <div class="vt-360-wrap">
-          <a-scene embedded cursor="rayOrigin: mouse" raycaster="objects: .clickable">
-            <!-- Leonardo panorama (new file name) -->
-            <a-sky src="assets/palmis-360.jpg" rotation="0 -90 0"></a-sky>
+        <!-- 360° PANEL -->
+        <div class="vt-panel active" id="view-360">
+          <div class="vt-360-wrap">
+            <a-scene embedded cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+              <!-- Leonardo panorama (NEW filename) -->
+              <a-sky src="assets/palmis-360.jpg" rotation="0 -90 0"></a-sky>
 
-            <!-- Camera -->
-            <a-entity id="mainCamera"
-                      camera
-                      look-controls="pointerLockEnabled: true"
-                      position="0 1.6 0">
-            </a-entity>
+              <!-- Camera -->
+              <a-entity id="mainCamera"
+                        camera
+                        look-controls="pointerLockEnabled: true"
+                        position="0 1.6 0">
+              </a-entity>
 
-            <!-- ONLY TABLE 5 IS CLICKABLE IN 360 -->
-            <a-entity id="table5-hotspot"
-                      class="clickable"
-                      geometry="primitive: plane; width: 0.6; height: 0.6"
-                      material="opacity: 0; transparent: true"
-                      position="0 1.1 -3">
-            </a-entity>
+              <!-- ONLY TABLE 5 CLICKABLE IN 360 -->
+              <a-entity id="table5-hotspot"
+                        class="clickable"
+                        geometry="primitive: plane; width: 0.6; height: 0.6"
+                        material="opacity: 0; transparent: true"
+                        position="0 1.1 -3">
+              </a-entity>
+            </a-scene>
 
-          </a-scene>
-
-          <div id="fullview-tip">
-            Drag to look around. Click table 5 to reserve it.
+            <div id="fullview-tip">
+              Drag to look around. Click table 5 to reserve it.
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- ANGLE 1 -->
-      <div class="vt-panel" id="view-angle1">
-        <div class="vt-img-wrap">
-          <img src="assets/angles/angle-1-tables-1-2-6.png"
-               alt="Restaurant view with tables 1, 2 and 6">
+        <!-- ANGLE 1 -->
+        <div class="vt-panel" id="view-angle1">
+          <div class="vt-img-wrap">
+            <img src="assets/angles/angle-1-tables-1-2-6.png"
+                 alt="Restaurant view with tables 1, 2 and 6">
 
-          <!-- rough positions, can tweak later -->
-          <button class="table-hotspot" data-table="1" style="top:60%; left:40%;"></button>
-          <button class="table-hotspot" data-table="2" style="top:60%; left:63%;"></button>
-          <button class="table-hotspot" data-table="6" style="top:58%; left:88%;"></button>
+            <!-- approximate hotspot positions, adjust later if needed -->
+            <button class="table-hotspot" data-table="1" style="top:60%; left:40%;"></button>
+            <button class="table-hotspot" data-table="2" style="top:60%; left:63%;"></button>
+            <button class="table-hotspot" data-table="6" style="top:58%; left:88%;"></button>
+          </div>
         </div>
-      </div>
 
-      <!-- ANGLE 2 -->
-      <div class="vt-panel" id="view-angle2">
-        <div class="vt-img-wrap">
-          <img src="assets/angles/angle-2-tables-17-19.png"
-               alt="Restaurant view with tables 17 and 19">
-
-          <button class="table-hotspot" data-table="17" style="top:60%; left:35%;"></button>
-          <button class="table-hotspot" data-table="19" style="top:60%; left:65%;"></button>
+        <!-- ANGLE 2 -->
+        <div class="vt-panel" id="view-angle2">
+          <div class="vt-img-wrap">
+            <img src="assets/angles/angle-2-tables-17-19.png"
+                 alt="Restaurant view with tables 17 and 19">
+            <button class="table-hotspot" data-table="17" style="top:60%; left:35%;"></button>
+            <button class="table-hotspot" data-table="19" style="top:60%; left:65%;"></button>
+          </div>
         </div>
-      </div>
 
-      <!-- ANGLE 3 -->
-      <div class="vt-panel" id="view-angle3">
-        <div class="vt-img-wrap">
-          <img src="assets/angles/angle-3-tables-17-18.png"
-               alt="Restaurant view with tables 17 and 18">
-
-          <button class="table-hotspot" data-table="17" style="top:60%; left:37%;"></button>
-          <button class="table-hotspot" data-table="18" style="top:60%; left:66%;"></button>
+        <!-- ANGLE 3 -->
+        <div class="vt-panel" id="view-angle3">
+          <div class="vt-img-wrap">
+            <img src="assets/angles/angle-3-tables-17-18.png"
+                 alt="Restaurant view with tables 17 and 18">
+            <button class="table-hotspot" data-table="17" style="top:60%; left:37%;"></button>
+            <button class="table-hotspot" data-table="18" style="top:60%; left:66%;"></button>
+          </div>
         </div>
-      </div>
 
-      <!-- ANGLE 4 -->
-      <div class="vt-panel" id="view-angle4">
-        <div class="vt-img-wrap">
-          <img src="assets/angles/angle-4-tables-21-22.png"
-               alt="Restaurant view with tables 21 and 22">
-
-          <button class="table-hotspot" data-table="21" style="top:60%; left:36%;"></button>
-          <button class="table-hotspot" data-table="22" style="top:60%; left:66%;"></button>
+        <!-- ANGLE 4 -->
+        <div class="vt-panel" id="view-angle4">
+          <div class="vt-img-wrap">
+            <img src="assets/angles/angle-4-tables-21-22.png"
+                 alt="Restaurant view with tables 21 and 22">
+            <button class="table-hotspot" data-table="21" style="top:60%; left:36%;"></button>
+            <button class="table-hotspot" data-table="22" style="top:60%; left:66%;"></button>
+          </div>
         </div>
+
+      </div><!-- /.vt-panels -->
+
+      <!-- Tabs overlay at bottom of the image -->
+      <div class="vt-tabs">
+        <button class="vt-tab active" data-target="view-360">360° View</button>
+        <button class="vt-tab" data-target="view-angle1">Angle 1 — Tables 1, 2, 6</button>
+        <button class="vt-tab" data-target="view-angle2">Angle 2 — Tables 17, 19</button>
+        <button class="vt-tab" data-target="view-angle3">Angle 3 — Tables 17, 18</button>
+        <button class="vt-tab" data-target="view-angle4">Angle 4 — Tables 21, 22</button>
       </div>
 
-    </div><!-- vt-panels -->
-
-    <!-- Tabs moved to the bottom -->
-    <div class="vt-tabs">
-      <button class="vt-tab active" data-target="view-360">360° View</button>
-      <button class="vt-tab" data-target="view-angle1">Angle 1 — Tables 1, 2, 6</button>
-      <button class="vt-tab" data-target="view-angle2">Angle 2 — Tables 17, 19</button>
-      <button class="vt-tab" data-target="view-angle3">Angle 3 — Tables 17, 18</button>
-      <button class="vt-tab" data-target="view-angle4">Angle 4 — Tables 21, 22</button>
-    </div>
+    </div><!-- /.vt-viewer -->
 
   </section>
 </main>
