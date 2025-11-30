@@ -128,15 +128,15 @@
       border-color: transparent;
     }
 
-.table-hotspot{
+   .table-hotspot{
   position: absolute;
   width: 7%;
   height: 9%;
   transform: translate(-50%, -50%);
   border-radius: 8px;
+  background: transparent;   /* 🔹 fully invisible */
+  border: none;              /* 🔹 no dashed outline */
   cursor: pointer;
-  background: transparent !important; /* fully invisible */
-  border: none !important;           /* no dashed box */
 }
 
 
@@ -253,11 +253,9 @@
         <div class="vt-img-wrap">
           <img src="assets/angles/angle-1-tables-1-2-6.png"
                alt="Restaurant view with tables 1, 2 and 6">
-         <button class="table-hotspot" data-table="1" style="top:72%; left:20%;"></button>
-<button class="table-hotspot" data-table="2" style="top:70%; left:50%;"></button>
-<button class="table-hotspot" data-table="6" style="top:72%; left:78%;"></button>
-
-
+          <button class="table-hotspot" data-table="1" style="top:60%; left:40%;"></button>
+          <button class="table-hotspot" data-table="2" style="top:60%; left:63%;"></button>
+          <button class="table-hotspot" data-table="6" style="top:58%; left:88%;"></button>
         </div>
       </div>
 
