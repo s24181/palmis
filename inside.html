@@ -18,6 +18,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/palmis-apple-180.png">
   <meta name="theme-color" content="#000000">
 
+  <!-- Page-specific styles -->
   <style>
     html, body {
       height: 100%;
@@ -25,7 +26,7 @@
       overflow-x: hidden;
     }
 
-    /* Full-height layout, header on top, footer bottom */
+    /* Full-height layout: header on top, footer at bottom */
     body.inside-page {
       min-height: 100vh;
       display: flex;
@@ -33,26 +34,37 @@
       background: #000;
     }
 
-    /* Main area = everything between header and footer */
+    /* Main area fills everything between header & footer */
     main.inside-main {
       flex: 1;
       min-height: 0;
       display: flex;
-    }
-
-    /* Viewer fills the whole width & height of this main area */
-    .vt-viewer {
-      position: relative;
-      width: 100vw;   /* <<< full viewport width, no side gaps */
-      height: 100%;
-      overflow: hidden;
       background: #000;
     }
 
-    /* Panels stack on top of each other, one active */
+.vt-shell {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.vt-viewer {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #000;
+  overflow: hidden;
+}
+
+
+    /* Panels are stacked, only one visible */
     .vt-panels {
-      position: absolute;
-      inset: 0;
+      position: relative;
       width: 100%;
       height: 100%;
     }
@@ -67,7 +79,7 @@
       display: block;
     }
 
-    /* 360° panel */
+    /* 360° view fills area like hero */
     .vt-360-wrap {
       position: absolute;
       inset: 0;
@@ -78,23 +90,23 @@
       height: 100%;
     }
 
-    /* Angle images */
+    /* Angle images fill area like hero (cover) */
     .vt-img-wrap {
       position: absolute;
       inset: 0;
       background: #000;
     }
 
-    .vt-img-wrap img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;   /* same behaviour as hero image */
-      display: block;
-    }
+   .vt-img-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: calc(100vh - 70px - 60px); /* HEADER and footer space */
+  object-fit: cover;
+}
 
-    /* Tabs bar OVER the image, at the bottom */
+
+    /* Tabs overlaid at bottom of the image */
     .vt-tabs {
       position: absolute;
       left: 50%;
@@ -128,23 +140,23 @@
       border-color: transparent;
     }
 
-   .table-hotspot{
-  position: absolute;
-  width: 7%;
-  height: 9%;
-  transform: translate(-50%, -50%);
-  border-radius: 8px;
-  background: transparent;   /* 🔹 fully invisible */
-  border: none;              /* 🔹 no dashed outline */
-  cursor: pointer;
-}
-
+    /* Clickable zones on angle images */
+    .table-hotspot {
+      position: absolute;
+      width: 7%;
+      height: 9%;
+      transform: translate(-50%, -50%);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.15); /* set to 0 when done */
+      border: 1px dashed rgba(255,255,255,0.6);
+      cursor: pointer;
+    }
 
     .table-hotspot:hover {
       background: rgba(255,255,255,0.30);
     }
 
-    /* Tip for 360 view */
+    /* Tip overlay for 360° */
     #fullview-tip {
       position: absolute;
       top: 12px;
@@ -183,16 +195,19 @@
 
 <header class="header">
   <div class="container">
+    <!-- Logo / brand -->
     <a class="brand" href="index.html" aria-label="Palmis — Home">
       <img src="assets/logo/palmis-logo-cropped.jpg" alt="Palmis" class="logo">
     </a>
 
+    <!-- Hamburger button (shows on mobile only) -->
     <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
       <span></span>
       <span></span>
       <span></span>
     </button>
 
+    <!-- Navigation + language -->
     <nav class="nav">
       <a href="index.html">Home</a>
       <a href="menu.html">Menu</a>
@@ -217,95 +232,108 @@
   </div>
 </header>
 
+<!-- MAIN VIRTUAL TOUR CONTENT -->
 <main class="inside-main">
-  <!-- FULL-BLEED VIEWER -->
-  <div class="vt-viewer">
+  <section class="vt-shell">
 
-    <div class="vt-panels">
-      <!-- 360° VIEW -->
-      <div class="vt-panel active" id="view-360">
-        <div class="vt-360-wrap">
-          <a-scene embedded cursor="rayOrigin: mouse" raycaster="objects: .clickable">
-            <!-- Use your new 360 pano -->
-            <a-sky src="assets/palmis-360.jpg" rotation="0 -90 0"></a-sky>
+    <div class="vt-viewer">
+      <!-- 360 + angle panels -->
+      <div class="vt-panels">
 
-            <a-entity id="mainCamera"
-                      camera
-                      look-controls="pointerLockEnabled: true"
-                      position="0 1.6 0"></a-entity>
+        <!-- 360° PANEL -->
+        <div class="vt-panel active" id="view-360">
+          <div class="vt-360-wrap">
+            <a-scene embedded cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+              <!-- Leonardo panorama (NEW filename) -->
+              <a-sky src="assets/palmis-360.jpg" rotation="0 -90 0"></a-sky>
 
-            <!-- ONLY TABLE 5 CLICKABLE -->
-            <a-entity id="table5-hotspot"
-                      class="clickable"
-                      geometry="primitive: plane; width: 0.6; height: 0.6"
-                      material="opacity: 0; transparent: true"
-                      position="0 1.1 -3"></a-entity>
-          </a-scene>
+              <!-- Camera -->
+              <a-entity id="mainCamera"
+                        camera
+                        look-controls="pointerLockEnabled: true"
+                        position="0 1.6 0">
+              </a-entity>
 
-          <div id="fullview-tip">
-            Drag to look around. Click table 5 to reserve it.
+              <!-- ONLY TABLE 5 CLICKABLE IN 360 -->
+              <a-entity id="table5-hotspot"
+                        class="clickable"
+                        geometry="primitive: plane; width: 0.6; height: 0.6"
+                        material="opacity: 0; transparent: true"
+                        position="0 1.1 -3">
+              </a-entity>
+            </a-scene>
+
+            <div id="fullview-tip">
+              Drag to look around. Click table 5 to reserve it.
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- ANGLE 1 — tables 1, 2, 6 -->
-      <div class="vt-panel" id="view-angle1">
-        <div class="vt-img-wrap">
-          <img src="assets/angles/angle-1-tables-1-2-6.png"
-               alt="Restaurant view with tables 1, 2 and 6">
-          <button class="table-hotspot" data-table="1" style="top:60%; left:40%;"></button>
-          <button class="table-hotspot" data-table="2" style="top:60%; left:63%;"></button>
-          <button class="table-hotspot" data-table="6" style="top:58%; left:88%;"></button>
+        <!-- ANGLE 1 -->
+        <div class="vt-panel" id="view-angle1">
+          <div class="vt-img-wrap">
+            <img src="assets/angles/angle-1-tables-1-2-6.png"
+                 alt="Restaurant view with tables 1, 2 and 6">
+
+            <!-- approximate hotspot positions, adjust later if needed -->
+            <button class="table-hotspot" data-table="1" style="top:60%; left:40%;"></button>
+            <button class="table-hotspot" data-table="2" style="top:60%; left:63%;"></button>
+            <button class="table-hotspot" data-table="6" style="top:58%; left:88%;"></button>
+          </div>
         </div>
-      </div>
 
-      <!-- ANGLE 2 — tables 17, 19 -->
-      <div class="vt-panel" id="view-angle2">
-        <div class="vt-img-wrap">
-          <img src="assets/angles/angle-2-tables-17-19.png"
-               alt="Restaurant view with tables 17 and 19">
-          <button class="table-hotspot" data-table="17" style="top:60%; left:35%;"></button>
-          <button class="table-hotspot" data-table="19" style="top:60%; left:65%;"></button>
+        <!-- ANGLE 2 -->
+        <div class="vt-panel" id="view-angle2">
+          <div class="vt-img-wrap">
+            <img src="assets/angles/angle-2-tables-17-19.png"
+                 alt="Restaurant view with tables 17 and 19">
+            <button class="table-hotspot" data-table="17" style="top:60%; left:35%;"></button>
+            <button class="table-hotspot" data-table="19" style="top:60%; left:65%;"></button>
+          </div>
         </div>
-      </div>
 
-      <!-- ANGLE 3 — tables 17, 18 -->
-      <div class="vt-panel" id="view-angle3">
-        <div class="vt-img-wrap">
-          <img src="assets/angles/angle-3-tables-17-18.png"
-               alt="Restaurant view with tables 17 and 18">
-          <button class="table-hotspot" data-table="17" style="top:60%; left:37%;"></button>
-          <button class="table-hotspot" data-table="18" style="top:60%; left:66%;"></button>
+        <!-- ANGLE 3 -->
+        <div class="vt-panel" id="view-angle3">
+          <div class="vt-img-wrap">
+            <img src="assets/angles/angle-3-tables-17-18.png"
+                 alt="Restaurant view with tables 17 and 18">
+            <button class="table-hotspot" data-table="17" style="top:60%; left:37%;"></button>
+            <button class="table-hotspot" data-table="18" style="top:60%; left:66%;"></button>
+          </div>
         </div>
-      </div>
 
-      <!-- ANGLE 4 — tables 21, 22 -->
-      <div class="vt-panel" id="view-angle4">
-        <div class="vt-img-wrap">
-          <img src="assets/angles/angle-4-tables-21-22.png"
-               alt="Restaurant view with tables 21 and 22">
-          <button class="table-hotspot" data-table="21" style="top:60%; left:36%;"></button>
-          <button class="table-hotspot" data-table="22" style="top:60%; left:66%;"></button>
+        <!-- ANGLE 4 -->
+        <div class="vt-panel" id="view-angle4">
+          <div class="vt-img-wrap">
+            <img src="assets/angles/angle-4-tables-21-22.png"
+                 alt="Restaurant view with tables 21 and 22">
+            <button class="table-hotspot" data-table="21" style="top:60%; left:36%;"></button>
+            <button class="table-hotspot" data-table="22" style="top:60%; left:66%;"></button>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Tabs at the bottom of the image -->
-    <div class="vt-tabs">
-      <button class="vt-tab active" data-target="view-360">360° View</button>
-      <button class="vt-tab" data-target="view-angle1">Angle 1 — Tables 1, 2, 6</button>
-      <button class="vt-tab" data-target="view-angle2">Angle 2 — Tables 17, 19</button>
-      <button class="vt-tab" data-target="view-angle3">Angle 3 — Tables 17, 18</button>
-      <button class="vt-tab" data-target="view-angle4">Angle 4 — Tables 21, 22</button>
-    </div>
-  </div>
+      </div><!-- /.vt-panels -->
+
+      <!-- Tabs overlay at bottom of the image -->
+      <div class="vt-tabs">
+        <button class="vt-tab active" data-target="view-360">360° View</button>
+        <button class="vt-tab" data-target="view-angle1">Angle 1 — Tables 1, 2, 6</button>
+        <button class="vt-tab" data-target="view-angle2">Angle 2 — Tables 17, 19</button>
+        <button class="vt-tab" data-target="view-angle3">Angle 3 — Tables 17, 18</button>
+        <button class="vt-tab" data-target="view-angle4">Angle 4 — Tables 21, 22</button>
+      </div>
+
+    </div><!-- /.vt-viewer -->
+
+  </section>
 </main>
 
+<!-- FOOTER -->
 <footer class="footer">
   <p>© 2025 Palmis | Caribbean Restaurant Concept</p>
 </footer>
 
-<!-- Language selector -->
+<!-- Language selector logic (unchanged) -->
 <script>
   (function(){
     const flagMap = { en:'gb', fr:'fr', pl:'pl', es:'es' };
@@ -369,7 +397,7 @@
   })();
 </script>
 
-<!-- Tabs + hotspots + 360 table 5 -->
+<!-- Virtual Tour logic: tabs, hotspots, 360 table 5 click -->
 <script>
   // Tabs
   (function(){
@@ -385,7 +413,7 @@
     });
   })();
 
-  // Angle hotspots -> reserve.html?table=XX
+  // Flat image table hotspots -> reserve.html?table=XX
   (function(){
     const hotspots = document.querySelectorAll('.table-hotspot');
     hotspots.forEach(btn=>{
@@ -397,7 +425,7 @@
     });
   })();
 
-  // 360 table 5
+  // A-Frame: table 5 in 360 view
   window.addEventListener('load', function () {
     const table5 = document.querySelector('#table5-hotspot');
     if (table5) {
