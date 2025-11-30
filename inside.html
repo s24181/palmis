@@ -244,79 +244,80 @@
       <!-- 360 + angle panels -->
       <div class="vt-panels">
 
-        <!-- 360° PANEL -->
-        <div class="vt-panel active" id="view-360">
-          <div class="vt-360-wrap">
-            <a-scene embedded cursor="rayOrigin: mouse" raycaster="objects: .clickable">
-              <!-- Leonardo panorama (NEW filename) -->
-              <a-sky src="assets/palmis-360.jpg" rotation="0 -90 0"></a-sky>
+       <div class="vt-panels">
 
-              <!-- Camera -->
-              <a-entity id="mainCamera"
-                        camera
-                        look-controls="pointerLockEnabled: true"
-                        position="0 1.6 0">
-              </a-entity>
+  <!-- 360° PANEL -->
+  <div class="vt-panel active" id="view-360">
+    <div class="vt-360-wrap">
+      <a-scene embedded cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+        <!-- Leonardo panorama (NEW filename) -->
+        <a-sky src="assets/palmis-360.jpg" rotation="0 -90 0"></a-sky>
 
-              <!-- ONLY TABLE 5 CLICKABLE IN 360 -->
-              <a-entity id="table5-hotspot"
-                        class="clickable"
-                        geometry="primitive: plane; width: 0.6; height: 0.6"
-                        material="opacity: 0; transparent: true"
-                        position="0 1.1 -3">
-              </a-entity>
-            </a-scene>
+        <!-- Camera -->
+        <a-entity id="mainCamera"
+                  camera
+                  look-controls="pointerLockEnabled: true"
+                  position="0 1.6 0">
+        </a-entity>
 
-            <div id="fullview-tip">
-              Drag to look around. Click table 5 to reserve it.
-            </div>
-          </div>
-        </div>
+        <!-- ONLY TABLE 5 CLICKABLE IN 360 -->
+        <a-entity id="table5-hotspot"
+                  class="clickable"
+                  geometry="primitive: plane; width: 0.6; height: 0.6"
+                  material="opacity: 0; transparent: true"
+                  position="0 1.1 -3">
+        </a-entity>
+      </a-scene>
 
-        <!-- ANGLE 1 -->
-        <div class="vt-panel" id="view-angle1">
-         <div class="vt-img-wrap">
-    <img src="assets/angles/angle-1-tables-1-2-6.png" alt="Angle 1">
+      <div id="fullview-tip">
+        Drag to look around. Click table 5 to reserve it.
+      </div>
+    </div>
+  </div>
 
-    <button class="table-hotspot" style="top: 33%; left: 25%;" data-table="1"></button>
-<button class="table-hotspot" style="top: 44%; left: 53%;" data-table="2"></button>
-<button class="table-hotspot" style="top: 70%; left: 72%;" data-table="6"></button>
+  <!-- ANGLE 1 -->
+  <div class="vt-panel" id="view-angle1">
+    <div class="vt-img-wrap">
+      <img src="assets/angles/angle-1-tables-1-2-6.png" alt="Angle 1">
 
-</div>
-</div>
+      <button class="table-hotspot" style="top: 33%; left: 25%;" data-table="1"></button>
+      <button class="table-hotspot" style="top: 44%; left: 53%;" data-table="2"></button>
+      <button class="table-hotspot" style="top: 70%; left: 72%;" data-table="6"></button>
+    </div>
+  </div>
 
+  <!-- ANGLE 2 -->
+  <div class="vt-panel" id="view-angle2">
+    <div class="vt-img-wrap">
+      <img src="assets/angles/angle-2-tables-17-19.png"
+           alt="Restaurant view with tables 17 and 19">
+      <button class="table-hotspot" data-table="17" style="top:60%; left:35%;"></button>
+      <button class="table-hotspot" data-table="19" style="top:60%; left:65%;"></button>
+    </div>
+  </div>
 
-        <!-- ANGLE 2 -->
-        <div class="vt-panel" id="view-angle2">
-          <div class="vt-img-wrap">
-            <img src="assets/angles/angle-2-tables-17-19.png"
-                 alt="Restaurant view with tables 17 and 19">
-            <button class="table-hotspot" data-table="17" style="top:60%; left:35%;"></button>
-            <button class="table-hotspot" data-table="19" style="top:60%; left:65%;"></button>
-          </div>
-        </div>
+  <!-- ANGLE 3 -->
+  <div class="vt-panel" id="view-angle3">
+    <div class="vt-img-wrap">
+      <img src="assets/angles/angle-3-tables-17-18.png"
+           alt="Restaurant view with tables 17 and 18">
+      <button class="table-hotspot" data-table="17" style="top:60%; left:37%;"></button>
+      <button class="table-hotspot" data-table="18" style="top:60%; left:66%;"></button>
+    </div>
+  </div>
 
-        <!-- ANGLE 3 -->
-        <div class="vt-panel" id="view-angle3">
-          <div class="vt-img-wrap">
-            <img src="assets/angles/angle-3-tables-17-18.png"
-                 alt="Restaurant view with tables 17 and 18">
-            <button class="table-hotspot" data-table="17" style="top:60%; left:37%;"></button>
-            <button class="table-hotspot" data-table="18" style="top:60%; left:66%;"></button>
-          </div>
-        </div>
+  <!-- ANGLE 4 -->
+  <div class="vt-panel" id="view-angle4">
+    <div class="vt-img-wrap">
+      <img src="assets/angles/angle-4-tables-21-22.png"
+           alt="Restaurant view with tables 21 and 22">
+      <button class="table-hotspot" data-table="21" style="top:60%; left:36%;"></button>
+      <button class="table-hotspot" data-table="22" style="top:60%; left:66%;"></button>
+    </div>
+  </div>
 
-        <!-- ANGLE 4 -->
-        <div class="vt-panel" id="view-angle4">
-          <div class="vt-img-wrap">
-            <img src="assets/angles/angle-4-tables-21-22.png"
-                 alt="Restaurant view with tables 21 and 22">
-            <button class="table-hotspot" data-table="21" style="top:60%; left:36%;"></button>
-            <button class="table-hotspot" data-table="22" style="top:60%; left:66%;"></button>
-          </div>
-        </div>
+</div><!-- /.vt-panels -->
 
-      </div><!-- /.vt-panels -->
 
       <!-- Tabs overlay at bottom of the image -->
       <div class="vt-tabs">
