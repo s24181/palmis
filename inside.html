@@ -182,6 +182,56 @@
         padding: 4px 10px;
       }
     }
+/* ==== MOBILE OVERRIDE: keep the old nice pano look ==== */
+@media (max-width: 768px) {
+
+  /* viewer grows with content instead of forcing a viewport height */
+  .vt-viewer {
+    height: auto;
+  }
+
+  .vt-panels {
+    height: auto;
+  }
+
+  .vt-panel {
+    position: relative;
+  }
+
+  /* angle images: use the real aspect ratio again */
+  .vt-panel:not(#view-360) .vt-img-wrap {
+    position: relative;
+    inset: auto;
+    width: 100%;
+  }
+
+  .vt-panel:not(#view-360) .vt-img-wrap img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;   /* show whole image */
+    object-position: center;
+  }
+
+  /* tabs go UNDER the image on mobile */
+  .vt-tabs {
+    position: static;
+    transform: none;
+    margin: 12px auto 16px;
+  }
+
+  /* give the 360° view a fixed height on mobile so it’s visible */
+  #view-360 .vt-360-wrap {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+  }
+
+  #view-360 .vt-360-wrap a-scene {
+    width: 100%;
+    height: 100%;
+  }
+}
+
   </style>
 </head>
 
