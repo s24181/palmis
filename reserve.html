@@ -607,8 +607,8 @@
             <span class="table-num">4</span>
             <span class="table-pos">Central · 4 seats</span>
           </button>
-          <button class="table-btn" data-table="5" data-pos="Window">
-            <span class="table-num">5</span>
+          <button class="table-btn" data-table="18" data-pos="Window">
+            <span class="table-num">18</span>
             <span class="table-pos">Window · 2 seats</span>
           </button>
           <button class="table-btn is-disabled" disabled data-table="17" data-pos="Central">
@@ -723,81 +723,7 @@
 </footer>
 
 <script>
-(function(){
-  const flagMap = { en:'gb', fr:'fr', pl:'pl', es:'es' };
-  const langs = Object.keys(flagMap);
-
-  const btn   = document.getElementById('lang-btn');
-  const menu  = document.getElementById('lang-menu');
-  const flag  = document.getElementById('lang-flag');
-  const code  = document.getElementById('lang-code');
-  const wrap  = document.getElementById('lang');
-
-  const getLang = () => {
-    const parts = location.pathname.split('/').filter(Boolean);
-    return langs.includes(parts[0]) ? parts[0] : 'en';
-  };
-  const getPage = () => (location.pathname.split('/').pop() || 'reserve.html');
-  const buildUrl = (targetLang) => {
-    const cur = getLang(), page = getPage();
-    if (cur === 'en') return targetLang === 'en' ? page : `${targetLang}/${page}`;
-    if (targetLang === 'en') return `../${page}`;
-    if (targetLang === cur)  return page;
-    return `../${targetLang}/${page}`;
-  };
-
-  function syncUI(){
-    const cur = getLang();
-    flag.className = `fi fi-${flagMap[cur]}`;
-    code.textContent = cur.toUpperCase();
-    [...menu.children].forEach(li=>{
-      li.setAttribute('aria-selected', li.dataset.lang === cur ? 'true' : 'false');
-    });
-  }
-
-  function openMenu(){
-    menu.hidden = false;
-    btn.setAttribute('aria-expanded','true');
-    const cur = getLang();
-    const li = [...menu.children].find(x=>x.dataset.lang===cur) || menu.firstElementChild;
-    li && li.focus && li.focus();
-  }
-  function closeMenu(){
-    menu.hidden = true;
-    btn.setAttribute('aria-expanded','false');
-  }
-
-  btn.addEventListener('click', (e)=>{
-    e.stopPropagation();
-    menu.hidden ? openMenu() : closeMenu();
-  });
-
-  menu.addEventListener('click', (e)=>{
-    const li = e.target.closest('li[data-lang]');
-    if(!li) return;
-    const lang = li.dataset.lang;
-    location.href = buildUrl(lang);
-  });
-
-  document.addEventListener('keydown', (e)=>{
-    if(menu.hidden) return;
-    const items = [...menu.querySelectorAll('li[data-lang]')];
-    const current = document.activeElement.closest('li[data-lang]');
-    let idx = items.indexOf(current);
-    if(e.key === 'ArrowDown'){ e.preventDefault(); items[Math.min(idx+1, items.length-1)].focus(); }
-    if(e.key === 'ArrowUp'){   e.preventDefault(); items[Math.max(idx-1, 0)].focus(); }
-    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); current && current.click(); }
-    if(e.key === 'Escape'){ closeMenu(); btn.focus(); }
-  });
-
-  document.addEventListener('click', (e)=>{
-    if(!wrap.contains(e.target)) closeMenu();
-  });
-
-  syncUI();
-})();
-
-/* Reservation logic */
+/* Reservation logic (clean, compact, supports ?table=XX) */
 (function(){
   const steps   = document.querySelectorAll('[data-step]');
   const dots    = document.querySelectorAll('[data-step-dot]');
@@ -820,6 +746,7 @@
   const confirmBtn = document.getElementById('confirmBtn');
 
   const tableGrid = document.getElementById('tableGrid');
+
   let selectedTable = null;
   let selectedPos   = null;
 
@@ -835,10 +762,42 @@
   const successBox     = document.getElementById('successBox');
   const successSummary = document.getElementById('successSummary');
 
-  function goToStep(index){
-    steps.forEach(s => s.classList.toggle('is-active', Number(s.dataset.step) === index));
-    dots.forEach(d => d.classList.toggle('is-active', Number(d.dataset.stepDot) === index));
-    labels.forEach(l => l.classList.toggle('is-active', Number(l.dataset.stepLabel) === index));
+  const selectedTableLabel = document.getElementById('reserve-selected-table');
+  const selectedTableInput = document.getElementById('table-input');
+
+  /* --------------------- URL TABLE HANDLING --------------------- */
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlTable  = urlParams.get('table');   // e.g. "6"
+
+  function applyUrlTable(){
+    if (!urlTable || !tableGrid) return;
+
+    const btn = tableGrid.querySelector('.table-btn[data-table="' + urlTable + '"]:not(.is-disabled)');
+    if (!btn) return;
+
+    tableGrid.querySelectorAll('.table-btn').forEach(b=>b.classList.remove('is-selected'));
+    btn.classList.add('is-selected');
+
+    selectedTable = btn.dataset.table;
+    selectedPos   = btn.dataset.pos;
+
+    step2Next.disabled = false;
+
+    if (selectedTableLabel) {
+      selectedTableLabel.innerHTML = 'Selected table: <strong>' + selectedTable + '</strong>';
+    }
+    if (selectedTableInput) {
+      selectedTableInput.value = selectedTable;
+    }
+
+    syncPreview();
+  }
+
+  /* ------------------------ STEP NAVIGATION ---------------------- */
+  function goToStep(i){
+    steps.forEach(s => s.classList.toggle('is-active', Number(s.dataset.step) === i));
+    dots.forEach(d => d.classList.toggle('is-active', Number(d.dataset.stepDot) === i));
+    labels.forEach(l => l.classList.toggle('is-active', Number(l.dataset.stepLabel) === i));
   }
 
   function formatDate(dStr){
@@ -857,13 +816,16 @@
     previewDate.textContent   = resDate.value ? formatDate(resDate.value) : '–';
     previewTime.textContent   = resTime.value || '–';
     previewPeople.textContent = resPeople.value ? resPeople.value + ' people' : '–';
-    previewTable.textContent  = selectedTable ? `Table ${selectedTable}${selectedPos ? ', '+selectedPos : ''}` : '–';
+    previewTable.textContent  = selectedTable
+      ? `Table ${selectedTable}${selectedPos ? ', '+selectedPos : ''}`
+      : '–';
   }
 
   function canGoStep1(){
     return resDate.value && resTime.value && resPeople.value;
   }
 
+  /* ------------------------ STEP 1 EVENTS ------------------------ */
   resDate.addEventListener('input', syncPreview);
   resTime.addEventListener('input', syncPreview);
   resPeople.addEventListener('input', syncPreview);
@@ -877,14 +839,25 @@
     goToStep(1);
   });
 
+  /* ------------------------ STEP 2 EVENTS ------------------------ */
   tableGrid.addEventListener('click', (e)=>{
     const btn = e.target.closest('.table-btn');
     if(!btn || btn.classList.contains('is-disabled')) return;
+
     tableGrid.querySelectorAll('.table-btn').forEach(b=>b.classList.remove('is-selected'));
     btn.classList.add('is-selected');
+
     selectedTable = btn.dataset.table;
     selectedPos   = btn.dataset.pos;
     step2Next.disabled = false;
+
+    if (selectedTableLabel) {
+      selectedTableLabel.innerHTML = 'Selected table: <strong>' + selectedTable + '</strong>';
+    }
+    if (selectedTableInput) {
+      selectedTableInput.value = selectedTable;
+    }
+
     syncPreview();
   });
 
@@ -897,10 +870,11 @@
     }
     sumDate.textContent = formatDate(resDate.value);
     sumTP.textContent   = (resTime.value || '') + ' · ' + (resPeople.value || '2') + ' people';
-    sumTable.textContent = 'Table ' + selectedTable + (selectedPos ? ', ' + selectedPos + ' seats' : '');
+    sumTable.textContent = 'Table ' + selectedTable;
     goToStep(2);
   });
 
+  /* ------------------------ STEP 3 EVENTS ------------------------ */
   step3Back.addEventListener('click', ()=> goToStep(1));
 
   confirmBtn.addEventListener('click', ()=>{
@@ -916,44 +890,20 @@
 
     const txt = `${fullName}, your table ${selectedTable} for ${people} people on ${niceDate} at ${resTime.value} is booked. We’ll send a confirmation to ${email}.`;
     successSummary.textContent = txt;
+
     successBox.classList.add('is-visible');
     syncPreview();
   });
 
+  /* -------------------------- INIT ------------------------------- */
   const today = new Date();
   resDate.valueAsDate = today;
+
   syncPreview();
+  applyUrlTable();   // 🔥 Preselect the table from ?table=XX if present
 })();
 </script>
 
-<script>
-  (function(){
-    const header = document.querySelector('.header');
-    const toggle = document.querySelector('.nav-toggle');
-    if (!header || !toggle) return;
-
-    toggle.addEventListener('click', function () {
-      const open = header.classList.toggle('menu-open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  })();
-</script>
-
-<script>
-(function() {
-  // Read ?table=XX from the URL
-  const params = new URLSearchParams(window.location.search);
-  const table = params.get('table');
-
-  const tableText = document.getElementById('reserve-selected-table');
-  const tableInput = document.getElementById('table-input');
-
-  if (table && tableText && tableInput) {
-    tableText.innerHTML = 'Selected table: <strong>' + table + '</strong>';
-    tableInput.value = table;
-  }
-})();
-</script>
 
 </body>
 </html>
