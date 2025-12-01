@@ -430,6 +430,37 @@
       });
     }
   });
+    @media (max-width: 768px) {
+      .vt-tabs {
+        bottom: 10px;
+        padding: 4px 8px;
+      }
+      .vt-tab {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+      }
+    }
+
+    /* === OVERRIDE global vt-img-wrap rules from assets/styles.css === */
+    .vt-panel:not(#view-360) .vt-img-wrap {
+      height: auto !important;
+      display: block !important;
+      align-items: initial !important;
+      justify-content: initial !important;
+      overflow: visible !important;
+    }
+
+    .vt-panel:not(#view-360) .vt-img-wrap img {
+      width: 100% !important;
+      height: auto !important;
+    }
+
+    .vt-panel:not(#view-360) .table-hotspot {
+      background: rgba(255,255,255,0.25) !important;
+      border: 1px dashed rgba(255,255,255,0.9) !important;
+    }
+  </style>
+
 </script>
 
 </body>
