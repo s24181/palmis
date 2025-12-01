@@ -1457,31 +1457,49 @@ max-width: 100%;       /* smaller padding on phones */
   }
 }
 
-/* Wrapper that locks hotspots to the image */
-.vt-img-wrap {
+/* === VIRTUAL TOUR IMAGE LAYOUT (ANGLES) === */
+
+/* Viewer area under the header */
+.vt-viewer {
   position: relative;
   width: 100%;
-  height: calc(100vh - 70px); /* full height under header */
+  background: #000;
   overflow: hidden;
 }
 
-/* The image must not stretch unpredictably */
-.vt-img-wrap img {
+/* Image wrapper – follows the image’s natural height */
+.vt-img-wrap {
+  position: relative;
   width: 100%;
-  height: 100%;
-  object-fit: cover;   /* THIS is what stabilizes hotspot positions */
-  display: block;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
-/* Invisible hotspot */
+/* Image: always show the full photo, no crop */
+.vt-img-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;              /* 🔑 keeps full image on mobile */
+}
+
+/* Clickable table zones (percentages based on the image box) */
 .table-hotspot {
   position: absolute;
-  width: 7%;           /* adjust size */
-  height: 10%;
+  width: 7%;                 /* adjust if you want bigger/smaller */
+  height: 9%;
   transform: translate(-50%, -50%);
-  background: transparent;
-  border: none;
   cursor: pointer;
-  /* border: 1px dashed #fff4;  <-- for debugging only */
+
+  /* keep visible while you fine-tune */
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px dashed rgba(255, 255, 255, 0.9);
+}
+
+/* Optional: hide hotspot boxes on desktop once you're happy */
+@media (min-width: 769px) {
+  .table-hotspot {
+    background: transparent;
+    border: none;
+  }
 }
 
