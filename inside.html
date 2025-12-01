@@ -47,9 +47,11 @@
       width: 100%;
     }
 
+    /* 👇 key: give viewer an actual height */
     .vt-viewer {
       position: relative;
       width: 100%;
+      height: calc(100vh - 70px - 60px); /* header ~70 + footer ~60 */
       background: #000;
       overflow: hidden;
     }
@@ -71,7 +73,7 @@
       display: block;
     }
 
-    /* === 360° VIEW – full height === */
+    /* === 360° VIEW – fills viewer === */
     #view-360 .vt-360-wrap {
       position: absolute;
       inset: 0;
@@ -82,18 +84,18 @@
       height: 100%;
     }
 
-    /* === ANGLE IMAGES (Gemini) – full-width image, no right black bar === */
+    /* === ANGLE IMAGES (Gemini) – fill viewer, no side bars === */
     .vt-panel:not(#view-360) .vt-img-wrap {
-      position: relative;
-      width: 100%;
-      max-width: 100%;
-      margin: 0 auto;
+      position: absolute;
+      inset: 0;
     }
 
     .vt-panel:not(#view-360) .vt-img-wrap img {
       display: block;
-      width: 100%;   /* fills width */
-      height: auto;  /* keep full image */
+      width: 100%;
+      height: 100%;
+      object-fit: cover;      /* fill area, no right black bar */
+      object-position: center;
     }
 
     /* Hotspots on top of image */
