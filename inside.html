@@ -101,19 +101,17 @@
     }
 
     /* Hotspots on the Gemini images */
-    .vt-panel:not(#view-360) .table-hotspot {
-      position: absolute;
-      width: 7%;
-      height: 9%;
-      transform: translate(-50%, -50%);
-      border-radius: 8px;
-      cursor: pointer;
-
-      /* keep them invisible in production;
-         make rgba(255,255,255,0.25) if you want to debug */
-      background: transparent;
-      border: none;
-    }
+    .vt-panel:not(#view-360) 
+.table-hotspot{
+  position: absolute;
+  width: 7%;
+  height: 9%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent !important; 
+  border: none !important;           
+}
 
     .vt-panel:not(#view-360) .table-hotspot:hover {
       background: rgba(255,255,255,0.20);
