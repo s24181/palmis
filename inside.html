@@ -18,7 +18,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/palmis-apple-180.png">
   <meta name="theme-color" content="#000000">
 
-  <!-- Page-specific styles JUST for this page -->
+  <!-- PAGE-SPECIFIC STYLES (only for Virtual Tour) -->
   <style>
     html, body {
       height: 100%;
@@ -47,36 +47,36 @@
       width: 100%;
     }
 
-    /* 👇 key: give viewer an actual height */
+    /* Viewer: height is driven by content for angles, fixed for 360 */
     .vt-viewer {
       position: relative;
       width: 100%;
-      height: calc(100vh - 70px - 60px); /* header ~70 + footer ~60 */
       background: #000;
       overflow: hidden;
+      height: auto;
+      min-height: 0;
     }
 
     /* Panels container */
     .vt-panels {
       position: relative;
       width: 100%;
-      height: 100%;
+      height: auto;
     }
 
     .vt-panel {
-      position: absolute;
-      inset: 0;
       display: none;
+      width: 100%;
     }
 
     .vt-panel.active {
       display: block;
     }
 
-    /* === 360° VIEW – fills viewer === */
+    /* === 360° VIEW – full height section === */
     #view-360 .vt-360-wrap {
-      position: absolute;
-      inset: 0;
+      width: 100%;
+      height: calc(100vh - 70px - 60px); /* approx header + footer */
     }
 
     #view-360 .vt-360-wrap a-scene {
@@ -84,21 +84,23 @@
       height: 100%;
     }
 
-    /* === ANGLE IMAGES (Gemini) – fill viewer, no side bars === */
+    /* === ANGLE IMAGES (Gemini) – full-width, image controls height === */
+
     .vt-panel:not(#view-360) .vt-img-wrap {
-      position: absolute;
-      inset: 0;
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      overflow: visible;
     }
 
     .vt-panel:not(#view-360) .vt-img-wrap img {
       display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;      /* fill area, no right black bar */
-      object-position: center;
+      width: 100%;   /* fills width on all screens */
+      height: auto;  /* aspect ratio preserved – same look mobile/desktop */
     }
 
-    /* Hotspots on top of image */
+    /* Hotspots on the Gemini images */
     .vt-panel:not(#view-360) .table-hotspot {
       position: absolute;
       width: 7%;
@@ -107,13 +109,14 @@
       border-radius: 8px;
       cursor: pointer;
 
-      /* visible while tuning positions */
-      background: rgba(255, 255, 255, 0.25);
-      border: 1px dashed rgba(255, 255, 255, 0.9);
+      /* keep them invisible in production;
+         make rgba(255,255,255,0.25) if you want to debug */
+      background: transparent;
+      border: none;
     }
 
     .vt-panel:not(#view-360) .table-hotspot:hover {
-      background: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.20);
     }
 
     /* Tip overlay for 360° */
@@ -138,7 +141,7 @@
       100% { opacity: 0; }
     }
 
-    /* Tabs overlaid at bottom of the viewer */
+    /* Tabs overlaid at bottom on desktop, under image on mobile */
     .vt-tabs {
       position: absolute;
       left: 50%;
@@ -172,66 +175,45 @@
       border-color: transparent;
     }
 
+    /* ===== MOBILE: keep old pano look, tabs below image ===== */
     @media (max-width: 768px) {
-      .vt-tabs {
-        bottom: 10px;
-        padding: 4px 8px;
+
+      .vt-viewer {
+        height: auto;
       }
-      .vt-tab {
-        font-size: 0.75rem;
-        padding: 4px 10px;
+
+      .vt-panels {
+        height: auto;
+      }
+
+      .vt-panel {
+        position: relative;
+      }
+
+      .vt-panel:not(#view-360) .vt-img-wrap {
+        position: relative;
+        inset: auto;
+      }
+
+      .vt-panel:not(#view-360) .vt-img-wrap img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        object-position: center;
+      }
+
+      /* Tabs under the content on mobile */
+      .vt-tabs {
+        position: static;
+        transform: none;
+        margin: 12px auto 16px;
+      }
+
+      /* 360 height a bit smaller on phones */
+      #view-360 .vt-360-wrap {
+        height: 60vh;
       }
     }
-/* ==== MOBILE OVERRIDE: keep the old nice pano look ==== */
-@media (max-width: 768px) {
-
-  /* viewer grows with content instead of forcing a viewport height */
-  .vt-viewer {
-    height: auto;
-  }
-
-  .vt-panels {
-    height: auto;
-  }
-
-  .vt-panel {
-    position: relative;
-  }
-
-  /* angle images: use the real aspect ratio again */
-  .vt-panel:not(#view-360) .vt-img-wrap {
-    position: relative;
-    inset: auto;
-    width: 100%;
-  }
-
-  .vt-panel:not(#view-360) .vt-img-wrap img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;   /* show whole image */
-    object-position: center;
-  }
-
-  /* tabs go UNDER the image on mobile */
-  .vt-tabs {
-    position: static;
-    transform: none;
-    margin: 12px auto 16px;
-  }
-
-  /* give the 360° view a fixed height on mobile so it’s visible */
-  #view-360 .vt-360-wrap {
-    position: relative;
-    width: 100%;
-    height: 60vh;
-  }
-
-  #view-360 .vt-360-wrap a-scene {
-    width: 100%;
-    height: 100%;
-  }
-}
-
   </style>
 </head>
 
@@ -295,7 +277,7 @@
               <!-- Leonardo panorama -->
               <a-sky src="assets/palmis-360.jpg" rotation="0 -90 0"></a-sky>
 
-              <!-- Camera: NO POINTER LOCK -->
+              <!-- Camera: drag with mouse, no pointer lock -->
               <a-entity id="mainCamera"
                         camera
                         look-controls="pointerLockEnabled: false"
@@ -322,7 +304,6 @@
         <div class="vt-panel" id="view-angle1">
           <div class="vt-img-wrap">
             <img src="assets/angles/angle-1-tables-1-2-6.png" alt="Angle 1">
-
             <button class="table-hotspot" style="top: 54%; left: 23%;" data-table="1"></button>
             <button class="table-hotspot" style="top: 54%; left: 73%;" data-table="2"></button>
             <button class="table-hotspot" style="top: 54%; left: 82%;" data-table="6"></button>
@@ -361,7 +342,7 @@
 
       </div><!-- /.vt-panels -->
 
-      <!-- SINGLE tabs overlay -->
+      <!-- Tabs -->
       <div class="vt-tabs">
         <button class="vt-tab active" data-target="view-360">360° View</button>
         <button class="vt-tab" data-target="view-angle1">Angle 1 — Tables 1, 2, 6</button>
