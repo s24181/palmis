@@ -514,24 +514,29 @@
 </script>
 
 <script>
-  // DEBUG TOOL: Click on the image to get exact hotspot % coordinates
-  (function () {
-    const anglePanels = document.querySelectorAll(
-      '.vt-panel:not(#view-360) .vt-img-wrap'
+  // DEBUG: click on a Gemini angle image to get hotspot % coords
+  window.addEventListener('load', function () {
+    // Only Gemini angles, not the 360
+    const imgs = document.querySelectorAll(
+      '.vt-panel:not(#view-360) .vt-img-wrap img'
     );
 
-    anglePanels.forEach(wrap => {
-      wrap.addEventListener('click', function (e) {
-        const rect = this.getBoundingClientRect();
-        const xPercent = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
-        const yPercent = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+    imgs.forEach(function (img) {
+      img.addEventListener('click', function (e) {
+        const rect = img.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
 
-        alert(`top: ${yPercent}%; left: ${xPercent}%;`);
-        console.log(`top: ${yPercent}%; left: ${xPercent}%;`);
+        const xRound = x.toFixed(1);
+        const yRound = y.toFixed(1);
+
+        alert('top: ' + yRound + '% ; left: ' + xRound + '%');
+        console.log('top: ' + yRound + '% ; left: ' + xRound + '%');
       });
     });
-  })();
+  });
 </script>
+
 
 
 </body>
