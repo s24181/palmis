@@ -514,9 +514,8 @@
 </script>
 
 <script>
-  // DEBUG: click on any angle image to get % coordinates
+  // DEBUG TOOL: Click on the image to get exact hotspot % coordinates
   (function () {
-    // Only for the flat Gemini angle views (not the 360)
     const anglePanels = document.querySelectorAll(
       '.vt-panel:not(#view-360) .vt-img-wrap'
     );
@@ -527,14 +526,8 @@
         const xPercent = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
         const yPercent = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
 
-        console.log(`Click at  top: ${yPercent}%; left: ${xPercent}%;`);
-
-        // OPTIONAL: move the first hotspot in this image so you see it live
-        const hotspot = this.querySelector('.table-hotspot');
-        if (hotspot) {
-          hotspot.style.top = yPercent + '%';
-          hotspot.style.left = xPercent + '%';
-        }
+        alert(`top: ${yPercent}%; left: ${xPercent}%;`);
+        console.log(`top: ${yPercent}%; left: ${xPercent}%;`);
       });
     });
   })();
