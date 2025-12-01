@@ -1506,16 +1506,13 @@ max-width: 100%;       /* smaller padding on phones */
   position: relative;
 }
 
-.table-hotspot {
+.table-hotspot{
   position: absolute;
   width: 7%;
   height: 9%;
+  transform: translate(-50%, -50%);
   border-radius: 8px;
   cursor: pointer;
-
-  /* visible while tuning – make transparent later if you want */
-  background: rgba(255,255,255,0.25);
-  border: 1px dashed rgba(255,255,255,0.9);
-
-  transform: translate(-50%, -50%);
+  background: transparent !important; 
+  border: none !important;           
 }
