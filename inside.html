@@ -19,6 +19,7 @@
   <meta name="theme-color" content="#000000">
 
   <!-- Page-specific styles for INSIDE only -->
+    <!-- Page-specific styles -->
   <style>
     html, body {
       height: 100%;
@@ -26,7 +27,7 @@
       overflow-x: hidden;
     }
 
-    /* Full-height layout: header on top, footer at bottom */
+    /* Layout: header top, footer bottom */
     body.inside-page {
       min-height: 100vh;
       display: flex;
@@ -34,94 +35,82 @@
       background: #000;
     }
 
-    /* Main area fills everything between header & footer */
     main.inside-main {
       flex: 1;
-      min-height: 0;
       display: flex;
       background: #000;
     }
 
     .vt-shell {
       flex: 1;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
       display: flex;
       flex-direction: column;
+      width: 100%;
     }
 
     .vt-viewer {
-      flex: 1;
-      width: 100%;
-      height: 100%;
       position: relative;
+      width: 100%;
       background: #000;
       overflow: hidden;
-
-      /* center angle images */
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    /* Panels are stacked, only one visible */
+    /* Panels container */
     .vt-panels {
       position: relative;
       width: 100%;
-      height: 100%;
     }
 
     .vt-panel {
-      position: absolute;
-      inset: 0;
       display: none;
+      width: 100%;
     }
 
     .vt-panel.active {
       display: block;
     }
 
-    /* 360° view fills the whole viewer */
-    .vt-360-wrap {
-      position: absolute;
-      inset: 0;
+    /* === 360° VIEW – full height === */
+    #view-360 .vt-360-wrap {
+      width: 100%;
+      height: calc(100vh - 70px - 60px); /* header + footer approx */
     }
 
-    .vt-360-wrap a-scene {
+    #view-360 .vt-360-wrap a-scene {
       width: 100%;
       height: 100%;
     }
 
-    /* ----- ANGLE IMAGES: SHOW FULL PHOTO (NO CROP) ----- */
+    /* === ANGLE IMAGES (Gemini) – auto height, full width, no black gap === */
     .vt-panel:not(#view-360) .vt-img-wrap {
       position: relative;
-      display: inline-block;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
     }
 
     .vt-panel:not(#view-360) .vt-img-wrap img {
       display: block;
-      width: auto;
-      height: auto;
-      max-width: 100vw;
-      max-height: calc(100vh - 70px - 60px); /* header + footer */
+      width: 100%;   /* 🔑 fills width, no side bar */
+      height: auto;  /* keep full image, no crop */
     }
 
-    /* Hotspots */
-    .table-hotspot {
+    /* Hotspots sit on top of that image box */
+    .vt-panel:not(#view-360) .table-hotspot {
       position: absolute;
       width: 7%;
       height: 9%;
+      transform: translate(-50%, -50%);
       border-radius: 8px;
       cursor: pointer;
-      transform: translate(-50%, -50%);
-      background: rgba(255,255,255,0.25);
-      border: 1px dashed rgba(255,255,255,0.9);
+
+      /* visible while tuning positions */
+      background: rgba(255, 255, 255, 0.25);
+      border: 1px dashed rgba(255, 255, 255, 0.9);
     }
 
-    .table-hotspot:hover {
-      background: rgba(255,255,255,0.35);
+    .vt-panel:not(#view-360) .table-hotspot:hover {
+      background: rgba(255,255,255,0.3);
     }
 
     /* Tip overlay for 360° */
@@ -146,7 +135,7 @@
       100% { opacity: 0; }
     }
 
-    /* Tabs */
+    /* Tabs overlaid at bottom of the viewer */
     .vt-tabs {
       position: absolute;
       left: 50%;
@@ -159,7 +148,7 @@
       padding: 6px 10px;
       background: rgba(0,0,0,0.55);
       border-radius: 999px;
-      z-index: 50;
+      z-index: 30;
       backdrop-filter: blur(8px);
     }
 
@@ -191,6 +180,7 @@
       }
     }
   </style>
+
 </head>
 
 <body class="inside-page">
