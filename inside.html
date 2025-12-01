@@ -60,7 +60,7 @@
       background: #000;
       overflow: hidden;
 
-      /* Center angle images so full photo can show */
+      /* center angle images */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -95,14 +95,11 @@
     }
 
     /* ----- ANGLE IMAGES: SHOW FULL PHOTO (NO CROP) ----- */
-
-    /* Wrapper sized to the image itself */
     .vt-panel:not(#view-360) .vt-img-wrap {
       position: relative;
       display: inline-block;
     }
 
-    /* Image: always full, never cropped – scale down to fit */
     .vt-panel:not(#view-360) .vt-img-wrap img {
       display: block;
       width: auto;
@@ -111,7 +108,7 @@
       max-height: calc(100vh - 70px - 60px); /* header + footer */
     }
 
-    /* Clickable hotspots on top of the angle image */
+    /* Hotspots */
     .table-hotspot {
       position: absolute;
       width: 7%;
@@ -119,8 +116,6 @@
       border-radius: 8px;
       cursor: pointer;
       transform: translate(-50%, -50%);
-
-      /* visible while adjusting, you can hide later */
       background: rgba(255,255,255,0.25);
       border: 1px dashed rgba(255,255,255,0.9);
     }
@@ -151,7 +146,7 @@
       100% { opacity: 0; }
     }
 
-    /* Tabs overlaid at bottom of the viewer */
+    /* Tabs */
     .vt-tabs {
       position: absolute;
       left: 50%;
@@ -251,17 +246,14 @@
         <div class="vt-panel active" id="view-360">
           <div class="vt-360-wrap">
             <a-scene embedded cursor="rayOrigin: mouse" raycaster="objects: .clickable">
-              <!-- Leonardo panorama -->
               <a-sky src="assets/palmis-360.jpg" rotation="0 -90 0"></a-sky>
 
-              <!-- Camera -->
               <a-entity id="mainCamera"
                         camera
                         look-controls="pointerLockEnabled: true"
                         position="0 1.6 0">
               </a-entity>
 
-              <!-- ONLY TABLE 5 CLICKABLE IN 360 -->
               <a-entity id="table5-hotspot"
                         class="clickable"
                         geometry="primitive: plane; width: 0.6; height: 0.6"
@@ -281,7 +273,6 @@
           <div class="vt-img-wrap">
             <img src="assets/angles/angle-1-tables-1-2-6.png" alt="Angle 1">
 
-            <!-- adjust these % as needed -->
             <button class="table-hotspot" style="top: 54%; left: 23%;" data-table="1"></button>
             <button class="table-hotspot" style="top: 54%; left: 73%;" data-table="2"></button>
             <button class="table-hotspot" style="top: 54%; left: 82%;" data-table="6"></button>
@@ -320,7 +311,7 @@
 
       </div><!-- /.vt-panels -->
 
-      <!-- Tabs overlay at bottom of the image -->
+      <!-- SINGLE tabs overlay -->
       <div class="vt-tabs">
         <button class="vt-tab active" data-target="view-360">360° View</button>
         <button class="vt-tab" data-target="view-angle1">Angle 1 — Tables 1, 2, 6</button>
