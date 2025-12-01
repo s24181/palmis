@@ -182,6 +182,21 @@
         padding: 4px 10px;
       }
     }
+/* === MOBILE FIX: keep tabs at the real bottom === */
+@media (max-width: 768px) {
+  .vt-viewer {
+    min-height: calc(100vh - 70px - 60px); /* header + footer */
+    position: relative;
+  }
+
+  .vt-tabs {
+    position: absolute;
+    bottom: 6px !important;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
   </style>
 </head>
 
